@@ -1,0 +1,27 @@
+Version   SplitsTree4 $ SplitsTree4 $ Thu, 15 Jun 2017 11:35:18 +0900
+Copyright (C) 2017 Daniel H. Huson and David J. Bryant. This program comes with ABSOLUTELY NO WARRANTY.
+Version   SplitsTree4 $ SplitsTree4 $ Thu, 15 Jun 2017 11:35:18 +0900
+Copyright (C) 2017 Daniel H. Huson and David J. Bryant. This program comes with ABSOLUTELY NO WARRANTY.
+
+[!list1.txt
+]
+Opening
+[!list1.txt
+]
+Read TAXA:
+	96 taxa
+Read DISTANCES:
+	96x96 matrix
+--------- Start update ----------
+Computing DISTANCES to SPLITS: NeighborNet Variance=Ordinary_Least_Squares LambdaFrac=1.0
+
+Recomputed fit:
+	fit = 95.28224145031741
+	LS fit =99.62746850538983
+	stress =0.06113042834997775
+
+Splits: cyclic
+
+Computing SPLITS to NETWORK: EqualAngle UseWeights=true RunConvexHull=true DaylightIterations=0 OptimizeBoxesIterations=0 SpringEmbedderIterations=0
+--------- End update ----------
+done

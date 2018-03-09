@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist SYSTEM "file://localhost/System/Library/DTDs/PropertyList.dtd">
+<plist version="0.9">
+<dict>
+<key>CFBundleName</key>
+<string>SplitsTree4 Uninstaller</string>
+<key>CFBundleExecutable</key>
+<string>JavaApplicationStub</string>
+<key>CFBundleIconFile</key>
+<string>app.icns</string>
+<key>CFBundleInfoDictionaryVersion</key>
+<string>6.0</string>
+<key>CFBundlePackageType</key>
+<string>APPL</string>
+<key>CFBundleSignature</key>
+<string>????</string>
+<key>CFBundleIdentifier</key>
+<string>com.install4j.1505-7129-3447-4151.uninstaller</string>
+<key>CFBundleVersion</key>
+<string>4.14.5</string>
+<key>CFBundleShortVersionString</key>
+<string>4.14.5</string>
+<key>CFBundleGetInfoString</key>
+<string>4.14.5</string>
+<key>CFBundleDevelopmentRegion</key>
+<string>en</string>
+<key>CFBundleAllowMixedLocalizations</key>
+<true/>
+<key>NSHighResolutionCapable</key>
+<true/>
+<key>LSHasLocalizedDisplayName</key>
+<true/>
+<!-- I4J_INSERT_DOCTYPE -->
+<key>i4j.baseDir</key>
+<string>$APP_PACKAGE/../</string>
+<key>LSMinimumSystemVersion</key>
+<string>10.7.3</string>
+<key>i4j.appId</key>
+<string>1505-7129-3447-4151</string>
+<key>i4j.allowPassthrough</key>
+<true/>
+<key>i4j.minVersion</key>
+<string>1.7</string>
+<key>i4j.maxVersion</key>
+<string></string>
+<key>i4j.vmIdPrefix</key>
+<string></string>
+<key>JavaVM</key>
+<dict>
+<key>MainClass</key>
+<string>com.install4j.runtime.launcher.MacLauncher</string>
+<key>VMOptionArray</key>
+<array>
+<string>-Dfile.encoding=UTF-8</string>
+<string>-Djava.library.path=$APP_PACKAGE/../.install4j:$APP_PACKAGE/../.install4j/user</string>
+<string>-Dexe4j.moduleName=$APP_PACKAGE</string>
+</array>
+<key>OptionsFile</key>
+<string>$APP_PACKAGE/Contents/vmoptions.txt</string>
+<key>ArgumentArray</key>
+<array>
+</array>
+<key>SearchSequence</key>
+<array>
+<string>Y</string>
+<string>EJAVA_HOME</string>
+<string>EJDK_HOME</string>
+</array>
+<key>VersionInfo</key>
+<string>0_3612599688</string>
+<key>ClassPath</key>
+<string>$APP_PACKAGE/../.install4j/i4jruntime.jar</string><!-- I4J_INSERT_CLASSPATH -->
+<key>WorkingDirectory</key>
+<string>$APP_PACKAGE/../..</string>
+</dict>
+</dict>
+</plist>

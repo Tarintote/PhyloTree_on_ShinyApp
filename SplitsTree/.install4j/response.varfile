@@ -1,0 +1,9 @@
+# install4j response file for SplitsTree4 4.14.5
+myXmx$Integer=600
+sys.adminRights$Boolean=false
+sys.component.1691242192$Boolean=true
+sys.component.1691242193$Boolean=true
+sys.component.1691242194$Boolean=true
+sys.installationDir=/Applications/SplitsTree
+sys.languageId=en
+sys.programGroupDisabled$Boolean=true

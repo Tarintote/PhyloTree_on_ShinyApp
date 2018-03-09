@@ -1,0 +1,464 @@
+[INFO] logger started at Thu Aug 10 13:07:56 JST 2017
+[INFO] executable name: /Volumes/splitstree4/SplitsTree4 Installer.app
+[INFO] install4j version: 6.1.5 (build 6349)
+[INFO] Properties: 
+-- listing properties --
+java.runtime.name=Java(TM) SE Runtime Environment
+exe4j.moduleName=/Volumes/splitstree4/SplitsTree4 Inst...
+sun.boot.library.path=/private/var/folders/_r/tpgsj3bx64q95...
+java.vm.version=25.92-b14
+i4j.jreBundle=/var/folders/_r/tpgsj3bx64q9522ptpkdw...
+gopherProxySet=false
+java.vm.vendor=Oracle Corporation
+java.vendor.url=http://java.oracle.com/
+path.separator=:
+java.vm.name=Java HotSpot(TM) 64-Bit Server VM
+file.encoding.pkg=sun.io
+user.country=JP
+sun.java.launcher=SUN_STANDARD
+sun.os.patch.level=unknown
+install4j.exeDir=/Volumes/splitstree4/
+java.vm.specification.name=Java Virtual Machine Specification
+user.dir=/Volumes/splitstree4/SplitsTree4 Inst...
+java.runtime.version=1.8.0_92-b14
+java.awt.graphicsenv=sun.awt.CGraphicsEnvironment
+i4j.ownBundlePath=/Volumes/splitstree4/SplitsTree4 Inst...
+java.endorsed.dirs=/private/var/folders/_r/tpgsj3bx64q95...
+os.arch=x86_64
+java.io.tmpdir=/var/folders/_r/tpgsj3bx64q9522ptpkdw...
+line.separator=
+
+java.vm.specification.vendor=Oracle Corporation
+os.name=Mac OS X
+sun.java2d.noddraw=true
+sun.jnu.encoding=UTF-8
+java.library.path=/Users/ieuser/Library/Java/Extensions...
+sun.awt.enableExtraMouseButtons=true
+java.specification.name=Java Platform API Specification
+java.class.version=52.0
+sun.management.compiler=HotSpot 64-Bit Tiered Compilers
+os.version=10.12.5
+http.nonProxyHosts=local|*.local|169.254/16|*.169.254/16
+user.home=/Users/ieuser
+user.timezone=Asia/Tokyo
+java.awt.printerjob=sun.lwawt.macosx.CPrinterJob
+java.specification.version=1.8
+file.encoding=UTF-8
+user.name=ieuser
+java.class.path=/Volumes/splitstree4/SplitsTree4 Inst...
+java.vm.specification.version=1.8
+sun.arch.data.model=64
+java.home=/private/var/folders/_r/tpgsj3bx64q95...
+sun.java.command=com.install4j.runtime.launcher.MacLau...
+java.specification.vendor=Oracle Corporation
+user.language=ja
+awt.toolkit=sun.lwawt.macosx.LWCToolkit
+java.vm.info=mixed mode
+java.version=1.8.0_92
+java.ext.dirs=/Users/ieuser/Library/Java/Extensions...
+sun.boot.class.path=/private/var/folders/_r/tpgsj3bx64q95...
+java.vendor=Oracle Corporation
+i4j.tarFile=/Volumes/splitstree4/SplitsTree4 Inst...
+install4j.appDir=/Volumes/splitstree4/SplitsTree4 Inst...
+file.separator=/
+java.vendor.url.bug=http://bugreport.sun.com/bugreport/
+sun.cpu.endian=little
+sun.io.unicode.encoding=UnicodeBig
+sun.font.fontmanager=sun.font.CFontManager
+socksNonProxyHosts=local|*.local|169.254/16|*.169.254/16
+ftp.nonProxyHosts=local|*.local|169.254/16|*.169.254/16
+sun.cpu.isalist=
+[INFO] com.install4j.runtime.installer.platform.macos.VolumeInfo: image: /Users/ieuser/Downloads/splitstree4_macos_4_14_5.dmg, mountPoint: /Volumes/splitstree4
+[INFO] com.install4j.runtime.beans.actions.misc.RequestPrivilegesAction [ID 1691242195]: Execute action
+       Property obtainIfAdminWin: true
+       Property obtainIfNormalWin: false
+       Property failIfNotObtainedWin: true
+       Property obtainIfAdminMac: false
+       Property obtainIfNormalMac: false
+       Property failIfNotObtainedMac: true
+       Property failIfNotRootUnix: false
+       Property allRequested: false
+       Property rollbackSupported: false
+       Execute action successful after 11 ms
+[INFO] com.install4j.runtime.beans.screens.StartupScreen [ID 15]: command: move 1 screens, executing actions, checking condition
+[INFO] com.install4j.runtime.beans.screens.WelcomeScreen [ID 1691242171]: Show screen
+       thread name AWT-EventQueue-0
+[INFO] com.install4j.runtime.beans.screens.WelcomeScreen [ID 1691242171]: command: move 1 screens, executing actions, checking condition
+[INFO] com.install4j.runtime.beans.screens.LicenseScreen [ID 1691242172]: Show screen
+[INFO] com.install4j.runtime.beans.screens.LicenseScreen [ID 1691242172]: command: move 1 screens, executing actions, checking condition
+[INFO] com.install4j.runtime.beans.screens.InstallationDirectoryScreen [ID 1691242173]: Show screen
+       checking writable with maximum
+[INFO] com.install4j.runtime.beans.screens.InstallationDirectoryScreen [ID 1691242173]: command: move 1 screens, executing actions, checking condition
+[INFO] com.install4j.runtime.beans.screens.ComponentsScreen [ID 1691242174]: Show screen
+[INFO] com.install4j.runtime.beans.screens.ComponentsScreen [ID 1691242174]: command: move 1 screens, executing actions, checking condition
+       Variable changed: sys.programGroupDisabled=true[class java.lang.Boolean]
+[INFO] com.install4j.runtime.beans.screens.InstallationScreen [ID 1691242177]: Show screen
+[INFO] com.install4j.runtime.beans.actions.UninstallPreviousAction [ID 1691242348]: Execute action
+       Property installationDirectory: null
+       Property installerVariables: {}
+       Property onlyIfSameApplicationId: true
+       Property logFiles: []
+       Property uninstallServices: true
+       Property rollbackSupported: true
+       checking running processes
+[ERROR] com.install4j.runtime.beans.actions.UninstallPreviousAction [ID 1691242348]: javax.script.ScriptException: AppleScript engine not found
+javax.script.ScriptException: AppleScript engine not found
+	at com.install4j.runtime.installer.helper.AppleScriptHelper.executeWithReturnValue(AppleScriptHelper.java:50)
+	at com.install4j.runtime.installer.helper.AppleScriptHelper.getRecords(AppleScriptHelper.java:21)
+	at com.install4j.runtime.installer.platform.macos.MacProcessHelper.addGuiProcesses(MacProcessHelper.java:104)
+	at com.install4j.runtime.installer.platform.macos.MacProcessHelper.getRunningProcesses(MacProcessHelper.java:81)
+	at com.install4j.runtime.installer.helper.RunningProcessChecker$RunningProcessThread.run(RunningProcessChecker.java:329)
+[INFO] com.install4j.runtime.beans.actions.UninstallPreviousAction [ID 1691242348]: checking running processes ok
+       getting previous installation id
+       no previous installation detected, uninstaller was not started
+       finished
+       Execute action successful after 179 ms
+[INFO] com.install4j.runtime.beans.actions.InstallFilesAction [ID 1691242178]: Execute action
+       Property saveDownloadedFiles: false
+       Property sizeCalculatorScript: null
+       Property installRuntime: true
+       Property updateBundledJre: true
+       Property checkFreeSpace: true
+       Property validateApplicationId: false
+       Property directoryResolverScript: null
+       Property showFileNames: true
+       Property triggerReboot: true
+       Property delay: false
+       Property fileFilterScript: null
+       Property rollbackSupported: true
+       Component SplitsTree[1691242194]; Selected: true
+       Component Manual[1691242193]; Selected: true
+       Component Examples[1691242192]; Selected: true
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/bin/java; size: 103632 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:52 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/bin/jjs; size: 103712 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/bin/keytool; size: 103712 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/bin/orbd; size: 103712 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/bin/pack200; size: 103712 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/bin/policytool; size: 103712 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/bin/rmid; size: 103712 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/bin/rmiregistry; size: 103712 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/bin/servertool; size: 103712 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/bin/tnameserv; size: 103712 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/bin/unpack200; size: 116544 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/COPYRIGHT; size: 3244 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:51 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/calendars.properties; size: 1378 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/charsets.jar; size: 3133453 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:52 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/classlist; size: 72450 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:51 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/cmm/CIEXYZ.pf; size: 51236 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:52 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/cmm/GRAY.pf; size: 632 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/cmm/LINEAR_RGB.pf; size: 1044 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/cmm/PYCC.pf; size: 274474 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/cmm/sRGB.pf; size: 3144 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/content-types.properties; size: 5916 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:51 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/currency.data; size: 4122 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/deploy.jar; size: 2214508 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:52 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/ext/cldrdata.jar; size: 3837561 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:54 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/ext/dnsns.jar; size: 8150 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/ext/jaccess.jar; size: 43839 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/ext/jfxrt.jar; size: 18519427 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:55 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/ext/localedata.jar; size: 1174510 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/ext/meta-index; size: 1269 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:52 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/ext/nashorn.jar; size: 1978297 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:55 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/ext/sunec.jar; size: 39771 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:52 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/ext/sunjce_provider.jar; size: 278718 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/ext/sunpkcs11.jar; size: 250826 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/ext/zipfs.jar; size: 67457 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:55 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/flavormap.properties; size: 4211 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:51 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/fontconfig.bfc; size: 3058 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/fontconfig.properties.src; size: 8087 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/fonts/fonts.dir; size: 4041 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:52 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/fonts/LucidaBrightDemiBold.ttf; size: 75144 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/fonts/LucidaBrightDemiItalic.ttf; size: 75124 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/fonts/LucidaBrightItalic.ttf; size: 80856 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/fonts/LucidaBrightRegular.ttf; size: 344908 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/fonts/LucidaSansDemiBold.ttf; size: 317896 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/fonts/LucidaSansRegular.ttf; size: 698236 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/fonts/LucidaTypewriterBold.ttf; size: 234068 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/fonts/LucidaTypewriterRegular.ttf; size: 242700 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/hijrah-config-umalqura.properties; size: 13962 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:51 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/images/cursors/cursors.properties; size: 1274 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:52 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/images/cursors/invalid32x32.gif; size: 153 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/images/cursors/motif_CopyDrop32x32.gif; size: 158 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/images/cursors/motif_CopyNoDrop32x32.gif; size: 153 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/images/cursors/motif_LinkDrop32x32.gif; size: 162 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/images/cursors/motif_LinkNoDrop32x32.gif; size: 153 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/images/cursors/motif_MoveDrop32x32.gif; size: 141 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/images/cursors/motif_MoveNoDrop32x32.gif; size: 153 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/javafx.properties; size: 55 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:51 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/jce.jar; size: 114950 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/jfr/default.jfc; size: 20109 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:52 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/jfr/profile.jfc; size: 20065 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/jfr.jar; size: 558733 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/jfxswt.jar; size: 33469 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/jli/libjli.dylib; size: 61704 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/jspawnhelper; size: 15136 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:51 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/jsse.jar; size: 631569 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:52 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/jvm.cfg; size: 624 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:51 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/jvm.hprof.txt; size: 4226 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libAppleScriptEngine.dylib; size: 45120 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libattach.dylib; size: 16068 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libawt.dylib; size: 552948 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libawt_lwawt.dylib; size: 721232 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libbci.dylib; size: 9164 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libdcpr.dylib; size: 186456 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libdecora_sse.dylib; size: 62900 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libdeploy.dylib; size: 166872 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libdt_socket.dylib; size: 25616 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libfontmanager.dylib; size: 419360 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libfxplugins.dylib; size: 174156 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libglass.dylib; size: 380660 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libglib-lite.dylib; size: 1185040 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libgstreamer-lite.dylib; size: 1537888 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libhprof.dylib; size: 216992 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libinstrument.dylib; size: 142392 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libj2gss.dylib; size: 41124 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libj2pcsc.dylib; size: 15092 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libj2pkcs11.dylib; size: 70692 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libjaas_unix.dylib; size: 8852 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libjava.dylib; size: 216812 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libjava_crw_demo.dylib; size: 28896 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libjavafx_font.dylib; size: 38524 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libjavafx_font_t2k.dylib; size: 784900 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libjavafx_iio.dylib; size: 250956 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libjawt.dylib; size: 8652 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libjdwp.dylib; size: 304248 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libjfr.dylib; size: 25328 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libjfxmedia.dylib; size: 240840 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libjfxmedia_avf.dylib; size: 214088 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libjfxmedia_qtkit.dylib; size: 53204 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libjfxwebkit.dylib; size: 38159424 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libjpeg.dylib; size: 180468 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libjsdt.dylib; size: 14628 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libjsig.dylib; size: 15744 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libjsound.dylib; size: 74872 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libkcms.dylib; size: 374428 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/liblcms.dylib; size: 333072 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libmanagement.dylib; size: 53576 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libmlib_image.dylib; size: 834796 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libnet.dylib; size: 90788 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libnio.dylib; size: 61460 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libnpt.dylib; size: 15684 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libosx.dylib; size: 55364 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libosxapp.dylib; size: 110948 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libosxkrb5.dylib; size: 14424 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libosxui.dylib; size: 36068 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libprism_common.dylib; size: 54732 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libprism_es2.dylib; size: 62084 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libprism_sw.dylib; size: 67968 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libresource.dylib; size: 10104 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libsaproc.dylib; size: 77036 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libsplashscreen.dylib; size: 348848 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libsunec.dylib; size: 161704 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libt2k.dylib; size: 310328 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libunpack.dylib; size: 102100 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libverify.dylib; size: 49472 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/libzip.dylib; size: 36680 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/logging.properties; size: 2455 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/management/jmxremote.access; size: 3998 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:52 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/management/jmxremote.password.template; size: 2856 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/management/management.properties; size: 14097 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/management/snmp.acl.template; size: 3376 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/management-agent.jar; size: 370 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/meta-index; size: 2107 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:51 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/net.properties; size: 3070 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/plugin.jar; size: 937294 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:52 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/psfont.properties.ja; size: 2796 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:51 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/psfontj2d.properties; size: 10393 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/resources.jar; size: 3501653 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:53 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/rt.jar; size: 66314749 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:54 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/security/blacklist; size: 4054 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:52 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/security/blacklisted.certs; size: 1273 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/security/cacerts; size: 108873 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/security/java.policy; size: 2466 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/security/java.security; size: 26326 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/security/local_policy.jar; size: 3527 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/security/trusted.libraries; size: 0 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/security/US_export_policy.jar; size: 3026 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/server/libjsig.dylib; size: 15744 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:51 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/server/libjvm.dylib; size: 16123620 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:52 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/server/Xusage.txt; size: 1423 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/sound.properties; size: 1210 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:07:51 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/lib/tzdb.dat; size: 101908 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/LICENSE; size: 40 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/README; size: 46 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/THIRDPARTYLICENSEREADME-JAVAFX.txt; size: 110114 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/THIRDPARTYLICENSEREADME.txt; size: 177094 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Home/jre/Welcome.html; size: 955 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/jre.bundle/Contents/Info.plist; size: 1577 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/Messages.bundle/Contents/Resources/en.lproj/Localizable.strings; size: 412 bytes; exists: false
+       File options set to: [fileTime: Thu Jun 15 18:35:22 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/automaticUpdater.app/Contents/Info.plist; size: 2211 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/automaticUpdater.app/Contents/MacOS/JavaApplicationStub; size: 56572 bytes; exists: false
+       File options set to: [fileTime: Thu Jun 15 18:35:22 JST 2017, mode: 755, overwriteMode: If newer otherwise ask, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/automaticUpdater.app/Contents/PkgInfo; size: 8 bytes; exists: false
+       File options set to: [fileTime: Thu Jun 15 18:35:22 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/automaticUpdater.app/Contents/Resources/app.icns; size: 105969 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/automaticUpdater.app/Contents/Resources/i4jlauncher.config; size: 2404 bytes; exists: false
+       Install file: /Applications/SplitsTree/SplitsTree4 Uninstaller.app/Contents/Info.plist; size: 2153 bytes; exists: false
+       Install file: /Applications/SplitsTree/SplitsTree4 Uninstaller.app/Contents/MacOS/JavaApplicationStub; size: 56572 bytes; exists: false
+       File options set to: [fileTime: Thu Jun 15 18:35:22 JST 2017, mode: 755, overwriteMode: If newer otherwise ask, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/SplitsTree4 Uninstaller.app/Contents/PkgInfo; size: 8 bytes; exists: false
+       File options set to: [fileTime: Thu Jun 15 18:35:22 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/SplitsTree4 Uninstaller.app/Contents/Resources/app.icns; size: 111575 bytes; exists: false
+       Install file: /Applications/SplitsTree/SplitsTree4 Uninstaller.app/Contents/Resources/i4jlauncher.config; size: 2313 bytes; exists: false
+       Install file: /Applications/SplitsTree/License.txt; size: 756 bytes; exists: false
+       Install file: /Applications/SplitsTree/SplitsTree.app/Contents/Info.plist; size: 2327 bytes; exists: false
+       Install file: /Applications/SplitsTree/SplitsTree.app/Contents/MacOS/JavaApplicationStub; size: 56572 bytes; exists: false
+       File options set to: [fileTime: Thu Jun 15 18:35:22 JST 2017, mode: 755, overwriteMode: If newer otherwise ask, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/SplitsTree.app/Contents/PkgInfo; size: 8 bytes; exists: false
+       File options set to: [fileTime: Thu Jun 15 18:35:22 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/SplitsTree.app/Contents/Resources/app.icns; size: 24950 bytes; exists: false
+       Install file: /Applications/SplitsTree/SplitsTree.app/Contents/Resources/i4jlauncher.config; size: 2461 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/.DS_Store; size: 6148 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/Jama-1.0.3.jar; size: 35981 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/Jama-NOTICE.txt; size: 602 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/SplitsTree4.jar; size: 3226795 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/VectorGraphics2D-0.11.jar; size: 101185 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/VectorGraphics2D-License.txt; size: 7446 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/LICENSE.dom-documentation.txt; size: 4003 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/LICENSE.dom-software.txt; size: 3554 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/LICENSE.fop-transcoder-allinone-1.1.txt; size: 158 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/LICENSE.js.txt; size: 46909 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/LICENSE.sax.txt; size: 779 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/LICENSE.xalan-2.7.0.txt; size: 142 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/LICENSE.xerces_2_5_0.txt; size: 2892 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/LICENSE.xmlgraphics-commons-2.0.txt; size: 11362 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/README.fop-transcoder-allinone-1.1.txt; size: 357 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/README.js.txt; size: 743 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/README.xalan-2.7.0.txt; size: 216 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/README.xerces_2_5_0.txt; size: 214 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/README.xml-apis-1.3.04.txt; size: 872 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/README.xml-apis-ext-1.3.04.txt; size: 593 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/Squiggle.icns; size: 49249 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-LICENSE.txt; size: 11361 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-NOTICE.txt; size: 684 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-anim-1.8.jar; size: 377041 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-awt-util-1.8.jar; size: 301026 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-bridge-1.8.jar; size: 529673 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-codec-1.8.jar; size: 108571 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-css-1.8.jar; size: 256539 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-dom-1.8.jar; size: 140057 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-ext-1.8.jar; size: 10344 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-extension-1.8.jar; size: 54734 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-gui-util-1.8.jar; size: 152268 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-gvt-1.8.jar; size: 144226 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-parser-1.8.jar; size: 55267 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-script-1.8.jar; size: 17155 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-svg-dom-1.8.jar; size: 217197 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-svggen-1.8.jar; size: 177874 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-swing-1.8.jar; size: 155148 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-transcoder-1.8.jar; size: 92512 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-util-1.8.jar; size: 107736 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/batik-xml-1.8.jar; size: 26776 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/fop-transcoder-allinone-1.1.jar; size: 1477961 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/js.jar; size: 504741 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/make-squiggle-app.sh; size: 2859 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/serializer.jar; size: 276420 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/xalan-2.7.2.jar; size: 3154938 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/xercesImpl.jar; size: 1367760 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/xerces_2_5_0.jar; size: 934835 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/xml-apis-ext-1.3.04.jar; size: 85686 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/xml-apis.jar; size: 220536 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/batik-1.8/xmlgraphics-commons-2.0.jar; size: 632499 bytes; exists: false
+       Install file: /Applications/SplitsTree/jars/i4jruntime.jar; size: 1191958 bytes; exists: false
+       Install file: /Applications/SplitsTree/Examples/algae.nex; size: 13283 bytes; exists: false
+       File options set to: [fileTime: Thu Jun 15 18:35:22 JST 2017, mode: 644, overwriteMode: If newer otherwise ask, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/Examples/bees.nex; size: 5483 bytes; exists: false
+       Install file: /Applications/SplitsTree/Examples/chainletters.nex; size: 80536 bytes; exists: false
+       Install file: /Applications/SplitsTree/Examples/colors.nex; size: 20432 bytes; exists: false
+       Install file: /Applications/SplitsTree/Examples/consensus-30-0.10.nex; size: 106670 bytes; exists: false
+       Install file: /Applications/SplitsTree/Examples/dolphins_binary.nex; size: 2551 bytes; exists: false
+       File options set to: [fileTime: Thu Jun 15 18:35:22 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/Examples/mammals.nex; size: 173700 bytes; exists: false
+       File options set to: [fileTime: Thu Jun 15 18:35:22 JST 2017, mode: 644, overwriteMode: If newer otherwise ask, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/Examples/myosin.nex; size: 211551 bytes; exists: false
+       Install file: /Applications/SplitsTree/Examples/north.nex; size: 1094 bytes; exists: false
+       Install file: /Applications/SplitsTree/Examples/primates-mtDNA.nex; size: 14513 bytes; exists: false
+       Install file: /Applications/SplitsTree/Examples/quartets.nex; size: 466 bytes; exists: false
+       Install file: /Applications/SplitsTree/Examples/reticulations.nex; size: 4094 bytes; exists: false
+       File options set to: [fileTime: Thu Jun 15 18:35:22 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/Examples/reticulations.small.nex; size: 2180 bytes; exists: false
+       Install file: /Applications/SplitsTree/Examples/rubber.nex; size: 10431 bytes; exists: false
+       File options set to: [fileTime: Thu Jun 15 18:35:22 JST 2017, mode: 644, overwriteMode: If newer otherwise ask, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/Examples/south.nex; size: 4229 bytes; exists: false
+       Install file: /Applications/SplitsTree/Examples/trees.nex; size: 689 bytes; exists: false
+       Install file: /Applications/SplitsTree/Examples/trees50.nex; size: 116347 bytes; exists: false
+       Install file: /Applications/SplitsTree/manual.pdf; size: 524122 bytes; exists: false
+       File options set to: [fileTime: Thu Jun 15 18:35:22 JST 2017, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/inst_jre.cfg; size: 146 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:08:12 JST 2017, mode: 644, overwriteMode: Always, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/pref_jre.cfg; size: 47 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:08:12 JST 2017, mode: 644, overwriteMode: Always, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/i4jruntime.jar; size: 1856510 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:08:12 JST 2017, mode: 644, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/MessagesDefault; size: 33534 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/i4jparams.conf; size: 78885 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/stats.properties; size: 1130 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/user.jar; size: 22623 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/install4j; size: 30528 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:08:12 JST 2017, mode: 755, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/i4j_extf_0_1cl9g5y.utf8; size: 33534 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 10 13:08:12 JST 2017, mode: 644, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
+       Install file: /Applications/SplitsTree/.install4j/i4j_extf_1_1cl9g5y.txt; size: 756 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/i4j_extf_2_1cl9g5y_cwz6mn.png; size: 1028 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/i4j_extf_3_1cl9g5y_1sxzjn7.png; size: 2565 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/i4j_extf_4_1cl9g5y_1qp61c0.png; size: 4831 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/i4j_extf_5_1cl9g5y_m2fwyn.png; size: 19672 bytes; exists: false
+       Install file: /Applications/SplitsTree/.install4j/i4j_extf_6_1cl9g5y_1wjq2n5.png; size: 45902 bytes; exists: false
+       Execute action successful after 1911 ms
+[INFO] com.install4j.runtime.beans.actions.desktop.RegisterAddRemoveAction [ID 1691242180]: Execute action
+       Property icon: null
+       Property iconSource: Installer icon
+       Property itemName: SplitsTree4 4.14.5
+       Property persistentProperties: {}
+       Property rollbackSupported: true
+       Execute action successful after 0 ms
+[INFO] com.install4j.runtime.beans.screens.InstallationScreen [ID 1691242177]: Rollback barrier reached
+       command: move 1 screens, executing actions, checking condition
+[INFO] com.install4j.runtime.beans.screens.FormScreen [ID 1691242246]: Show screen
+[INFO] com.install4j.runtime.beans.screens.FormScreen [ID 1691242246]: command: move 1 screens, executing actions, checking condition
+[INFO] com.install4j.runtime.beans.screens.FormScreen [ID 1691242249]: Show screen
+       Variable changed: myXmx=600[class java.lang.Integer]
+[INFO] com.install4j.runtime.beans.actions.misc.AddVmOptionsAction [ID 1691242251]: Execute action
+       Property vmOptions: [-Xmx600M]
+       Property macosVmOptionsType: Contained in the application bundle
+       Property launcherId: 1691242142
+       Property rollbackSupported: true
+       Execute action successful after 1 ms
+[INFO] com.install4j.runtime.beans.screens.FormScreen [ID 1691242249]: command: move 1 screens, executing actions, checking condition
+[INFO] com.install4j.runtime.beans.screens.FinishedScreen [ID 1691242181]: Show screen
+[INFO] com.install4j.runtime.beans.screens.FinishedScreen [ID 1691242181]: command: finish
+       cleaning up
+       Finished
