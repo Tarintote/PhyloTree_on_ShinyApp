@@ -52,19 +52,18 @@ Phylogenetic_Tree <- function(dist){
     }
 }
 
-phylogenetic_network <- function(dist){#nj.tree){
+phylogenetic_network <- function(labels){#nj.tree){
     ##系統ネットワークの作成
     Nnet <- read.nexus.networx(file.path("../Nexusfile/","distance_forSplitsTree.nex"))
+    indexs <- as.integer(substring(Nnet$tip.label, 2))
+    foreach(x=1:length(labels))%do%{
+        Nnet$tip.label[x] <- labels[indexs[x]]
+    }
+    Nnet
     #nnet <- neighborNet(dist, ord=NULL)
     #edge.lab <- createLabel(nnet, nj.tree, nj.tree$edge[,2], "edge")
     #edge.col <- rep("black", nrow(nnet$edge))
     #edge.col[ is.na(edge.lab) ] <- "gray"
-
-    ##プロット
-    #par(family="HiraKakuProN-W3")
-    #plot.networx(nnet,"3D",show.edge.label=FALSE, edge.color=edge.col, tip.color="violetred")
-    #plot(nnet,"3D", show.edge.label=FALSE, tip.color="violetred")
-    ##plot(nnet, "3D")
 }
 
 upgma_tree <- function(dist){

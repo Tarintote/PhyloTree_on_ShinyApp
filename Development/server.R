@@ -168,9 +168,14 @@ shinyServer(
             distance <<- getDistance()
             update_checkbox.handlar()
             dis <- area_selected_distance_matrix(distance, input$area_check_box)
-            nex$makeNexusFile(dis, "../Nexusfile/", "distance", dimnames(dis)[[1]])
+            label_names <- dimnames(dis)[[1]]
+            new_label_of_Index = c()
+            foreach(x=1:length(label_names)) %do%{
+                new_label_of_Index <-c(new_label_of_Index, paste("a", x, sep=("")))
+            }
+            nex$makeNexusFile(dis, "../Nexusfile/", "distance", new_label_of_Index)
             system("../SplitsTree/SplitsTree.app/Contents/MacOS/JavaApplicationStub -g -c ../commandfile.split")
-            phylogenetic_network(as.dist(dis))
+            phylogenetic_network(label_names)
         })
 
         network.plot <- eventReactive(input$plot_action,{
