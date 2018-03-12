@@ -44,17 +44,24 @@ Phylogenetic_Tree <- function(dist){
     ##系統樹の作成
     nj.tree <- nj(dist)
     #any()は比較要素の内1つでもTRUEがあれば1つにまとめる (True, False, True) -> True
-    if (any(nj.tree$tip.label %in% "想定形") == TRUE){
-        reroot.nj.tree <- root(nj.tree, which(nj.tree$tip.label=="想定形"))
-        return(reroot.nj.tree)
-    }else{
-        return(nj.tree)
+    foreach(x=1:length(nj.tree$tip.label)) %do%{
+        print(strsplit(nj.tree$tip.label[x], split=" '")[[1]])
+        if ("想定形" %in% strsplit(nj.tree$tip.label[x], split=" '")[[1]]){
+            nj.tree <- root(nj.tree, x)
+            #return(reroot.nj.tree)
+        }
     }
+    nj.tree
 }
 
-phylogenetic_network <- function(dist){#nj.tree){
+phylogenetic_network <- function(labels){#nj.tree){
     ##系統ネットワークの作成
     Nnet <- read.nexus.networx(file.path("../Nexusfile/","distance_forSplitsTree.nex"))
+    indexs <- as.integer(substring(Nnet$tip.label, 2))
+    foreach(x=1:length(labels))%do%{
+        Nnet$tip.label[x] <- labels[indexs[x]]
+    }
+    Nnet
     #nnet <- neighborNet(dist, ord=NULL)
     #edge.lab <- createLabel(nnet, nj.tree, nj.tree$edge[,2], "edge")
     #edge.col <- rep("black", nrow(nnet$edge))
