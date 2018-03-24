@@ -45,7 +45,6 @@ Phylogenetic_Tree <- function(dist){
     nj.tree <- nj(dist)
     #any()は比較要素の内1つでもTRUEがあれば1つにまとめる (True, False, True) -> True
     foreach(x=1:length(nj.tree$tip.label)) %do%{
-        print(strsplit(nj.tree$tip.label[x], split=" '")[[1]])
         if (("想定形" %in% strsplit(nj.tree$tip.label[x], split=" '")[[1]]) || ("'想定形'" %in% strsplit(nj.tree$tip.label[x], split=" '")[[1]])){
             nj.tree <- root(nj.tree, x)
             #return(reroot.nj.tree)
