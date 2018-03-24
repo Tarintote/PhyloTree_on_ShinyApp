@@ -44,12 +44,13 @@ Phylogenetic_Tree <- function(dist){
     ##系統樹の作成
     nj.tree <- nj(dist)
     #any()は比較要素の内1つでもTRUEがあれば1つにまとめる (True, False, True) -> True
-    if (any(nj.tree$tip.label %in% "想定形") == TRUE){
-        reroot.nj.tree <- root(nj.tree, which(nj.tree$tip.label=="想定形"))
-        return(reroot.nj.tree)
-    }else{
-        return(nj.tree)
+    foreach(x=1:length(nj.tree$tip.label)) %do%{
+        if (("想定形" %in% strsplit(nj.tree$tip.label[x], split=" '")[[1]]) || ("'想定形" %in% strsplit(nj.tree$tip.label[x], split="' ")[[1]])){
+            nj.tree <- root(nj.tree, x)
+            #return(reroot.nj.tree)
+        }
     }
+    nj.tree
 }
 
 phylogenetic_network <- function(labels){#nj.tree){
