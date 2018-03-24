@@ -65,12 +65,6 @@ phylogenetic_network <- function(labels){#nj.tree){
     #edge.lab <- createLabel(nnet, nj.tree, nj.tree$edge[,2], "edge")
     #edge.col <- rep("black", nrow(nnet$edge))
     #edge.col[ is.na(edge.lab) ] <- "gray"
-
-    ##プロット
-    #par(family="HiraKakuProN-W3")
-    #plot.networx(nnet,"3D",show.edge.label=FALSE, edge.color=edge.col, tip.color="violetred")
-    #plot(nnet,"3D", show.edge.label=FALSE, tip.color="violetred")
-    ##plot(nnet, "3D")
 }
 
 upgma_tree <- function(dist){

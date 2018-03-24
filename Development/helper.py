@@ -54,7 +54,6 @@ def set_labels(dist):
             break
         dis = dist[dist.columns[:]]
         rep_indeces = dis.iloc[i, :][(dis.iloc[i, :] == 0.0) == True].index[:]
-
         try:
             pronunce = rep_indeces[0].split(" ")[1]
             new_name = pronunce + " " + \
