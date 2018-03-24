@@ -104,10 +104,10 @@ shinyServer(
             gcc$mainPreProccess()
             if (length(file_list) == 1){
                 gcc$oneWordFrame(types=selectArt_VC())
-                gcc$getDistanceMatrix()$to_csv('./DistanceStorage/distance.csv', sep=',')
+                nex$set_labels(gcc$getDistanceMatrix())$to_csv('./DistanceStorage/distance.csv', sep=',')
             }else{
                 gcc$sumDataFrame(types=selectArt_VC())
-                gcc$getDistanceMatrix()$to_csv('./DistanceStorage/distance.csv', sep=',')
+                nex$set_labels(gcc$getDistanceMatrix())$to_csv('./DistanceStorage/distance.csv', sep=',')
             }
         })
 
