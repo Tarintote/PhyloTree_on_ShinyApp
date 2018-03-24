@@ -55,9 +55,12 @@ def set_labels(dist):
         dis = dist[dist.columns[:]]
         rep_indeces = dis.iloc[i, :][(dis.iloc[i, :] == 0.0) == True].index[:]
 
-        pronunce = rep_indeces[0].split(" ")[1]
-        new_name = pronunce + " " + \
-            " ".join(map(lambda x: x.split(" ")[0], rep_indeces))
+        try:
+            pronunce = rep_indeces[0].split(" ")[1]
+            new_name = pronunce + " " + \
+                " ".join(map(lambda x: x.split(" ")[0], rep_indeces))
+        except Exception as e:
+            new_name = " ".join(rep_indeces)
 
         set_index = rep_indeces[1:]
         dist = dist[dist.index.isin(set_index) == False]
