@@ -46,26 +46,3 @@ def makeNexusFile(dm, nex_path, filename, index):
             file.write(writeLine + "\n")
 
         file.write(";\nend;")
-
-
-def set_labels(dist):
-    for i in range(len(dist)):
-        if i == len(dist):
-            break
-        dis = dist[dist.columns[:]]
-        rep_indeces = dis.iloc[i, :][(dis.iloc[i, :] == 0.0) == True].index[:]
-
-        try:
-            pronunce = rep_indeces[0].split(" ")[1]
-            new_name = pronunce + " " + \
-                " ".join(map(lambda x: x.split(" ")[0], rep_indeces))
-        except Exception as e:
-            new_name = " ".join(rep_indeces)
-
-        set_index = rep_indeces[1:]
-        dist = dist[dist.index.isin(set_index) == False]
-        dist = dist.drop(columns=set_index)
-
-        dist = dist.rename(
-            columns={dist.columns[i]: new_name}, index={dist.index[i]: new_name})
-    return dist
