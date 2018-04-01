@@ -5,6 +5,7 @@
 import make_database as md
 import make_bit_frame as mbf
 import make_distance_matrix as mdm
+import helper
 import sys
 import pandas as pd
 import numpy as np
@@ -109,12 +110,13 @@ class GenerateControler(object):
         name_list = copy.deepcopy(area_name_list)
         # pdb.set_trace()
         # for fl in range(0, len(self.file_list)):
-        self.data_frame_list = map(lambda x: self.make_data_frame(x, area_name_list, types), [
-                                   i for i in range(0, len(self.file_list))])
+        map(lambda x: self.make_data_frame(x, area_name_list, types), [
+            i for i in range(0, len(self.file_list))])
         self.s_name_list = name_list
         mDM = mdm.MakeDistanceMatrix()
         mDM.makeHammDistanceFrame(self.bit_frame_list, self.orig_frame_list)
         df = mDM.getDistanceFrame()
+        print(df)
         self.distance_matrix = pd.DataFrame(
             df, self.s_name_list, self.s_name_list)
 
@@ -146,7 +148,7 @@ class GenerateControler(object):
 
             #data_list = mbfs.joinAlignments(copy.deepcopy(data_list))
 
-            if self.bit_frame_list == []:
+            if len(self.bit_frame_list) == 0:
                 self.bit_frame_list = data_list
                 self.orig_frame_list = origin_data_list
             else:
@@ -210,7 +212,7 @@ class GenerateControler(object):
         self.distance_matrix = data_frame
 
     def getDistanceMatrix(self, types=0):
-        return self.distance_matrix
+        return self.distance_matrix  # helper.set_labels(self.distance_matrix)
 
     def calcTwoNorm(self, vectorList):
         if len(vectorList) == 1:

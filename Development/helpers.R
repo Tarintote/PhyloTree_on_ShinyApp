@@ -9,7 +9,6 @@ getDistance <- function(){
 
 area_selected_distance_matrix <- function(distance, selected_areas){
     selected_area_id <- which(dimnames(distance)[[1]] %!in% selected_areas)
-    print(selected_area_id)
     if ( is.null(selected_areas) || length(selected_area_id) == 0 ){
         return(as.matrix(distance))
     }else{

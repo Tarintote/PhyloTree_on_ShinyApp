@@ -1,6 +1,8 @@
 options(rgl.useNULL=TRUE)
 
 library(shiny)
+library(leaflet)
+library(phylocanvas)
 library(rgl)
 ##Define the application UI
 
@@ -62,7 +64,24 @@ shinyUI(fluidPage(
 
         mainPanel(
             tabsetPanel(
-                tabPanel("Plot Tree", plotOutput("tree", width="100%")),
+                tabPanel("Plot Tree",
+                    phylocanvasOutput("tree", width = "100%", height = "500px"),
+                    selectInput("tree.type", label = h3("Select Tree Type"),
+                        choices = list("rectangular" = "rectangular", "circular" = "circular", "hierarchical" = "hierarchical", "diagonal" = "diagonal", "radial" = "radial"),
+                        selected = 1)
+                ),
+                tabPanel("Plot Clustering",
+                    plotOutput("clustering", width="100%"),
+                    br(),
+                    br(),
+                    br(),
+                    br(),
+                    sliderInput("height_slider", label = h3("Sliders"), min = 0, max = 0.1, value = 0.05),
+                    br(),
+                    br(),
+                    plotOutput("GIS_mapping", width="100%"),
+                    leafletOutput("leaflet_map", width="100%")
+                ),
                 #tabPanel("Plot Tree", rglwidgetOutput("tree", width="100%", height = "512px")),
                 tabPanel("Plot Network", plotOutput("net", width="100%", height="512px"))
                 #以下はrglを使ってoutputするときに必要
