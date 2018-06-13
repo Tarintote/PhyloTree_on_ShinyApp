@@ -220,22 +220,27 @@ shinyServer(
         #####################
 
         cluster.plot <- eventReactive(input$plot_action,{
-            generateDistance()
-            dis$distance.matrix <- getDistance()
+            getFlag = generateDistance()
+            if(getFlag==0){
+                dis$distance.matrix <- getDistance()
 
-            update_checkbox.handlar()
-            dist_ <- area_selected_distance_matrix(dis$distance.matrix, input$area_check_box)
-            phy <- hclust(as.dist(dist_), method="average")
+                update_checkbox.handlar()
+                dist_ <- area_selected_distance_matrix(dis$distance.matrix, input$area_check_box)
+                phy <- hclust(as.dist(dist_), method="average")
 
-            cut_height <- input$height_slider
-            phy <- color_labels(phy, h = cut_height)
-            updateSliderInput(session, "height_slider", value = input$height_slider, min = 0, max = attributes(phy)$height)
+                cut_height <- input$height_slider
+                phy <- color_labels(phy, h = cut_height)
+                updateSliderInput(session, "height_slider", value = input$height_slider, min = 0, max = attributes(phy)$height)
 
-            #Set3は最大12色までしかない
-            colors_pal <- brewer.pal(12, "Set3")
-            # クラスタ番号と対応した色ベクトル(ラベル順)
-            col.cl <- colors_pal[cutree(phy, h=cut_height, order_clusters_as_data = F)]
-            dend <- phy %>% dendextend::set("labels_colors", value = col.cl)
+                #Set3は最大12色までしかない
+                colors_pal <- brewer.pal(12, "Set3")
+                # クラスタ番号と対応した色ベクトル(ラベル順)
+                col.cl <- colors_pal[cutree(phy, h=cut_height, order_clusters_as_data = F)]
+                dend <- phy %>% dendextend::set("labels_colors", value = col.cl)
+                return(dend)
+            }else{
+                return(1)
+            }
         })
 
         output$clustering <- renderPlot({
@@ -291,19 +296,23 @@ shinyServer(
         #######################
 
         network <- reactive({
-            generateDistance()
-            dis$distance.matrix <- getDistance()
-            update_checkbox.handlar()
-            dist_ <- area_selected_distance_matrix(dis$distance.matrix, input$area_check_box)
-            label_names <- dimnames(dist_)[[1]]
-            new_label_of_Index = c()
-            foreach(x=1:length(label_names)) %do%{
-                new_label_of_Index <-c(new_label_of_Index, paste("a", x, sep=("")))
+            getFlag = generateDistance()
+            if(getFlag==0){
+                dis$distance.matrix <- getDistance()
+                update_checkbox.handlar()
+                dist_ <- area_selected_distance_matrix(dis$distance.matrix, input$area_check_box)
+                label_names <- dimnames(dist_)[[1]]
+                new_label_of_Index = c()
+                foreach(x=1:length(label_names)) %do%{
+                    new_label_of_Index <-c(new_label_of_Index, paste("a", x, sep=("")))
+                }
+                nex$makeNexusFile(dist_, "../Nexusfile/", "distance", new_label_of_Index)
+                #system("../SplitsTree/SplitsTree.app/Contents/MacOS/JavaApplicationStub -g -c ../commandfile.split")
+                system("'/mnt/c/Program Files/SplitsTree/SplitsTree.exe' -g -c ../commandfile.split")
+                return(phylogenetic_network(label_names))
+            }else{
+                return(1)
             }
-            nex$makeNexusFile(dist_, "../Nexusfile/", "distance", new_label_of_Index)
-            #system("../SplitsTree/SplitsTree.app/Contents/MacOS/JavaApplicationStub -g -c ../commandfile.split")
-            system("'/mnt/c/Program Files/SplitsTree/SplitsTree.exe' -g -c ../commandfile.split")
-            phylogenetic_network(label_names)
         })
 
         network.plot <- eventReactive(input$plot_action,{
