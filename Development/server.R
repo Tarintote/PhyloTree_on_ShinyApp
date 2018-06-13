@@ -9,7 +9,7 @@ pkgs.name = c("shiny", "devtools", "reticulate", "phangorn", "phytools", "phyloc
  "igraph", "ggplot2", "dendextend", "RColorBrewer", "colormap", "gpclib", "maptools", "leaflet",
  "rgl")
 
-foreach(i = pkgs.name) %do%{
+foreach(i = pkgs.name, .packages="foreach") %do%{
     if(!require(i, character.only=TRUE)){
       install.packages(i)
     }
