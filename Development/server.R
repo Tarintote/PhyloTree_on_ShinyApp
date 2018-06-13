@@ -1,26 +1,19 @@
 options(rgl.useNULL=TRUE)
 #options(rgl.printRglwidget=FALSE)
 
-library(shiny)
-library(devtools)
-library(reticulate)
-library(phangorn) ## phylogenetic network
-library(phytools)
-library(phylocanvas)
-library(igraph)
+if(!require("foreach", character.only=TRUE)){
+  install.packages("foreach")
+}
 
-library(ggplot2)
-library(dendextend)
-library(RColorBrewer)
-library(colormap)
+pkgs.name = c("shiny", "devtools", "reticulate", "phangorn", "phytools", "phylocanvas",
+ "igraph", "ggplot2", "dendextend", "RColorBrewer", "colormap", "gpclib", "maptools", "leaflet",
+ "rgl")
 
-library(gpclib) # maptools の前提パッケージ gpclib を R で使うのに必要
-library(maptools)
-library(leaflet)
-
-#library(shinyRGL)
-library(rgl)
-library(foreach)
+foreach(i = pkgs.name) %do%{
+    if(!require(i, character.only=TRUE)){
+      install.packages(i)
+    }
+}
 
 gc <- import("generate_controler")
 nex <- import("helper")
