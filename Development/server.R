@@ -137,15 +137,20 @@ shinyServer(
         generateDistance <- reactive({
             file_list <- selectFile()
             print(file_list)
-            gcc <- gc$GenerateControler(file_list, vowelDataBaseFilePath(), consonantDataBaseFilePath())
-            #gcc.makeUsingFileList('./csvFileList/notUsingCSV.dat')
-            gcc$mainPreProccess()
-            if (length(file_list) == 1){
-                gcc$oneWordFrame(types=selectArt_VC())
+            if(length(file_list)!=0){
+                gcc <- gc$GenerateControler(file_list, vowelDataBaseFilePath(), consonantDataBaseFilePath())
+                #gcc.makeUsingFileList('./csvFileList/notUsingCSV.dat')
+                gcc$mainPreProccess()
+                if (length(file_list) == 1){
+                    gcc$oneWordFrame(types=selectArt_VC())
+                }else{
+                    gcc$sumDataFrame(types=selectArt_VC())
+                }
+                gcc$getDistanceMatrix()$to_csv('./DistanceStorage/distance.csv', sep=',')
+                return(0)
             }else{
-                gcc$sumDataFrame(types=selectArt_VC())
+                return(1)
             }
-            gcc$getDistanceMatrix()$to_csv('./DistanceStorage/distance.csv', sep=',')
         })
 
         observeEvent(input$select_all, {
@@ -183,11 +188,15 @@ shinyServer(
         ###############
 
         tree <- reactive({
-            generateDistance()
-            dis$distance.matrix <- getDistance()
-            update_checkbox.handlar()
-            dist_ <- area_selected_distance_matrix(dis$distance.matrix, input$area_check_box)
-            Phylogenetic_Tree(dist_)
+            getFlag = generateDistance()
+            if(getFlag==0){
+                dis$distance.matrix <- getDistance()
+                update_checkbox.handlar()
+                dist_ <- area_selected_distance_matrix(dis$distance.matrix, input$area_check_box)
+                return(Phylogenetic_Tree(dist_))
+            }else{
+                return(1)
+            }
         })
 
         tree.plot <- eventReactive(input$plot_action,{
@@ -195,7 +204,9 @@ shinyServer(
             par(family = "HiraKakuProN-W3")
             #direction="downwords"
             #plot(tree(), type="p", "3D", cex=0.8 ,use.edge.length = TRUE, tip.color="violetred")
-            phylocanvas(tree(), treetype = input$tree.type, alignlabels = F)
+            plotobj = tree()
+            if(is.list(plotobj)==TRUE)
+                phylocanvas(plotobj, treetype = input$tree.type, alignlabels = F)
         })
 
         output$tree <- renderPhylocanvas({
