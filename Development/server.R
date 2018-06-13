@@ -47,7 +47,10 @@ distance.object <- setRefClass(
 dis <- distance.object$new()
 count.handlar <- 0
 cwd <- os$getcwd()
-filepath <- os$path$join(cwd, "Development/DistanceStorage/distance.csv")
+dirpath <- os$path$join(cwd, "Development/DistanceStorage")
+if not os$path$exists(dirpath):
+    os$mkdir(dirpath)
+filepath <- os$path$join(dirpath, "distance.csv")
 
 ## サーバロジックの定義。ヒストグラムを描く
 shinyServer(
