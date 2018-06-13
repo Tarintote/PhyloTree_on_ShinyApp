@@ -283,10 +283,12 @@ shinyServer(
 
         observe({
             dend <- cluster.plot()
-            leafletProxy("leaflet_map") %>%
-                clearShapes() %>%
-                fitBounds(min(points()$x), min(points()$y), max(points()$x), max(points()$y)) %>%
-                addCircleMarkers(lng=points()$x, lat=points()$y, radius=10, popup=rownames(data.frame(labels_colors(dend))), color=data.frame(labels_colors(dend))[,] )
+            if(dend!=1){
+                leafletProxy("leaflet_map") %>%
+                    clearShapes() %>%
+                    fitBounds(min(points()$x), min(points()$y), max(points()$x), max(points()$y)) %>%
+                    addCircleMarkers(lng=points()$x, lat=points()$y, radius=10, popup=rownames(data.frame(labels_colors(dend))), color=data.frame(labels_colors(dend))[,] )
+            }
         })
 
         ###############
