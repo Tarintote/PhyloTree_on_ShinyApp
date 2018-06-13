@@ -145,7 +145,7 @@ shinyServer(
                 }else{
                     gcc$sumDataFrame(types=selectArt_VC())
                 }
-                gcc$getDistanceMatrix()$to_csv(filepath, sep=',')
+                gcc$getDistanceMatrix(path=filepath)
                 return(0)
             }else{
                 return(1)
@@ -289,7 +289,7 @@ shinyServer(
 
         observe({
             dend <- cluster.plot()
-            if(dend!=1){
+            if(is.list(dend)==TRUE){
                 leafletProxy("leaflet_map") %>%
                     clearShapes() %>%
                     fitBounds(min(points()$x), min(points()$y), max(points()$x), max(points()$y)) %>%
