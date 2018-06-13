@@ -17,6 +17,7 @@ foreach(i = pkgs.name, .packages="foreach") %do%{
 
 gc <- import("generate_controler")
 nex <- import("helper")
+os <- import("os")
 
 source("helpers.R")
 
@@ -45,6 +46,8 @@ distance.object <- setRefClass(
 
 dis <- distance.object$new()
 count.handlar <- 0
+cwd <- os$getcwd()
+filepath <- os$path$join(cwd, "DistanceStorage/distance.csv")
 
 ## サーバロジックの定義。ヒストグラムを描く
 shinyServer(
@@ -139,7 +142,7 @@ shinyServer(
                 }else{
                     gcc$sumDataFrame(types=selectArt_VC())
                 }
-                gcc$getDistanceMatrix()$to_csv('./DistanceStorage/distance.csv', sep=',')
+                gcc$getDistanceMatrix()$to_csv(filepath, sep=',')
                 return(0)
             }else{
                 return(1)
