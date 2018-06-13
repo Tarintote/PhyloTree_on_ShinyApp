@@ -46,8 +46,9 @@ distance.object <- setRefClass(
 
 dis <- distance.object$new()
 count.handlar <- 0
+
 cwd <- os$getcwd()
-dirpath <- os$path$join(cwd, "Development/DistanceStorage")
+dirpath <- os$path$join(cwd, "DistanceStorage")
 if(os$path$exists(dirpath)!=TRUE) os$mkdir(dirpath)
 filepath <- os$path$join(dirpath, "distance.csv")
 
