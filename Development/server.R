@@ -297,7 +297,8 @@ shinyServer(
                 new_label_of_Index <-c(new_label_of_Index, paste("a", x, sep=("")))
             }
             nex$makeNexusFile(dist_, "../Nexusfile/", "distance", new_label_of_Index)
-            system("../SplitsTree/SplitsTree.app/Contents/MacOS/JavaApplicationStub -g -c ../commandfile.split")
+            #system("../SplitsTree/SplitsTree.app/Contents/MacOS/JavaApplicationStub -g -c ../commandfile.split")
+            system("'/mnt/c/Program Files/SplitsTree/SplitsTree.exe' -g -c ../commandfile.split")
             phylogenetic_network(label_names)
         })
 
