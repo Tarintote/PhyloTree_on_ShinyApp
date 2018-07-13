@@ -211,7 +211,7 @@ class GenerateControler(object):
         data_frame = pd.DataFrame(df, name_list, name_list)
         self.distance_matrix = data_frame
 
-    def getDistanceMatrix(self, types=0, path=None):
+    def getDistanceMatrix(self, path=None):
         # helper.set_labels(self.distance_matrix)
         return self.distance_matrix.to_csv(path, sep=',')
 
