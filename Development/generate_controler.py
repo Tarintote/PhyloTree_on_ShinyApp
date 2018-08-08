@@ -79,18 +79,22 @@ class GenerateControler(object):
         return self.file_list
 
     def mainPreProccess(self):
-        vow_col = (self.vowel.columns == "母音").tolist().index(True)
-        vow_dot_index = (self.vowel.iloc[0:self.vowel.index.size,
-                                         vow_col] == ".").tolist().index(True)
-        vdb = md.VCDataBase(self.vowel.copy(), vow_dot_index)
-        cons_col = (self.cons.columns == "子音").tolist().index(True)
-        cons_dot_index = (self.cons.iloc[0: self.cons.index.size,
-                                         cons_col] == ".").tolist().index(True)
-        cdb = md.VCDataBase(self.cons.copy(), cons_dot_index)
-        vdb.generate_table_for_ward()
-        vdb.generate_table_for_art()
-        cdb.generate_table_for_ward()
-        cdb.generate_table_for_art()
+        vowel_col = self.vowel.columns.tolist().index("母音")
+        vowel_dot_idx = (
+            self.vowel.iloc[0:self.vowel.index.size, vowel_col] == ".").tolist().index(True)
+        vowel_Data = pd.DataFrame(np.array(
+            self.vowel.iloc[:vowel_dot_idx, 2:7]), index=self.cons.iloc[:cons_dot_idx, 1].values, columns=self.cons.columns[2:7])
+        vdb = md.VCData2bit(vowel_Data, vowel_dot_idx)
+
+        cons_col = self.cons.columns.tolist().index("子音")
+        cons_dot_idx = (
+            self.cons.iloc[0: self.cons.index.size, cons_col] == ".").tolist().index(True)
+        cons_Data = pd.DataFrame(np.array(
+            self.cons.iloc[:cons_dot_idx, 2:7]), index=self.cons.iloc[:cons_dot_idx, 1].values, columns=self.cons.columns[2:7])
+        cdb = md.VCData2bit(cons_Data, cons_dot_idx)
+
+        vdb.convert_value2bit_on_table
+        vdb.convert_value2bit_on_table
         self.cons = cdb.showTable()
         self.vowel = vdb.showTable()
 
