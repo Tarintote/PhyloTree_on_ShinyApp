@@ -1,0 +1,2 @@
+EXECUTE FILE=../Nexusfile/distance.nex;
+SAVE FILE=../Nexusfile/distance_forSplitsTree.nex REPLACE=YES APPEND=YES;
