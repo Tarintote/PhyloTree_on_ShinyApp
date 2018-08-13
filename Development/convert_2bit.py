@@ -15,7 +15,7 @@ class VCData2bit():
         bits = "0" * (bit_length)
         bits_list = list(bits)
         bits_list[0] = "1"
-        if position != -1:
+        if position != -9 and position != -8:
             bits_list[-(position + 1)] = "1"
         return "".join(bits_list)
 
@@ -27,5 +27,5 @@ class VCData2bit():
             bit_list = map(lambda x: self.make_bit(
                 bit_length, int(x)), self.table.values.T[i])
             bit_list[-1] = bit_length*"?"
-            bit_list[-2] = bit_length*"."
+            #bit_list[-2] = bit_length*"?"
             self.table.iloc[:, i] = bit_list
