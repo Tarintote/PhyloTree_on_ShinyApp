@@ -147,9 +147,9 @@ shinyServer(
                 #gcc.makeUsingFileList('./csvFileList/notUsingCSV.dat')
                 gcc$mainPreProccess()
                 if (length(file_list) == 1){
-                    gcc$oneWordFrame(types=selectArt_VC())
+                    gcc$generateOneWordFrame(types=selectArt_VC())
                 }else{
-                    gcc$sumDataFrame(types=selectArt_VC())
+                    gcc$generateSomeWordFrame(types=selectArt_VC())
                 }
                 gcc$getDistanceMatrix(path=filepath)
                 return(0)
