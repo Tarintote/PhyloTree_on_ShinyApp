@@ -77,9 +77,11 @@ class GenerateControler(object):
         self.cons = cdb.showTable()
         self.vowel = vdb.showTable()
 
-    def sumDataFrame(self, types=0):
-        # 複数の単語による系統樹生成
-        # types=0: 素性に基づく距離の生成, otherwise: 音素に基づく距離の生成
+    def generateSomeWordFrame(self, types=0):
+        """
+        複数の単語による系統樹生成
+        types=0: 素性に基づく距離の生成, otherwise: 音素に基づく距離の生成
+        """
         if len(self.file_list) == 0:
             return -1
 
@@ -87,11 +89,13 @@ class GenerateControler(object):
             init = pd.read_table(filer, delimiter=",")
 
         mbfs = mbf.MakeBitFrame(init, self.cons, self.vowel)
-        mbfs.makeIndeces(index_type=1)
+        mbfs.setIndecesLabels(index_type=1)
         self.s_name_list = mbfs.getNameIndex()
 
-        map(lambda file_num: self.make_data_frame(
-            file_num, self.s_name_list, types), range(len(self.file_list)))
+        all_bit_data = map(lambda file_num: self.getBitData(
+            file_num, types), range(len(self.file_list)))
+
+        self.bit_frame_list = np.concatenate(all_bit_data, axis=1)
 
         hDM = hdm.HammingDistanceMatrix()
         hDM.calcHammingDistanceMatrix(self.bit_frame_list)
@@ -100,35 +104,34 @@ class GenerateControler(object):
         self.distance_matrix.index = self.s_name_list
         self.distance_matrix.columns = self.s_name_list
 
-    def make_data_frame(self, file_number, area_name_list, types):
-        data_list = []
-        print(self.file_list[file_number])
+    def getBitData(self, file_number, types):
+        """
+        指定された単語ファイルから全地域の音素データをビットデータへ変換し、リストにして返す
+        """
+        bit_data = []
+        # print(self.file_list[file_number])
 
         with codecs.open(self.file_list[file_number], "r", "Shift-JIS", "ignore") as files:
             mtoshi = pd.read_table(files, delimiter=",")
 
             mbfs = mbf.MakeBitFrame(mtoshi, self.cons, self.vowel)
-            mbfs.makeIndeces(index_type=2)
-
-            mbfs.makeFrameList()
 
             if types == 0:
-                data_list = mbfs.getArticulationFrame()
+                mbfs.makeFrameList(data_type="a")
             else:
-                data_list = mbfs.getWordFrame()
+                mbfs.makeFrameList(data_type="w")
 
-            assert data_list != [], str(self.file_list[file_number])
+            bit_data = mbfs.getBitDataFrame()
 
-            data_list = mbfs.joinAlignments(copy.deepcopy(data_list))
+            assert bit_data != [], str(
+                self.file_list[file_number]) + "のファイルに不正文字が含まれている可能性があります。"
 
-            if len(self.bit_frame_list) == 0:
-                self.bit_frame_list = data_list
-            else:
-                self.bit_frame_list = np.array([np.hstack((x, y)) for x,
-                                                y in zip(self.bit_frame_list, data_list)])
-        return 0
+            bit_data = mbfs.joinAlignments(copy.deepcopy(bit_data))
 
-    def oneWordFrame(self, init_table=0, types=0):
+            # あとでconcatenateするために各要素をリストにする必要がある。
+        return map(lambda x: [x], bit_data)
+
+    def generateOneWordFrame(self, types=0):
         """
         １単語による距離の生成
         types=0: 素性に基づく距離の生成, otherwise: 音素に基づく距離の生成
@@ -141,21 +144,21 @@ class GenerateControler(object):
         print(self.file_list)
 
         mbfs = mbf.MakeBitFrame(mtoshi, self.cons, self.vowel)
-        mbfs.makeIndeces(index_type=0)
+        mbfs.setIndecesLabels(index_type=0)
         name_list = mbfs.getNameIndex()
 
-        mbfs.makeFrameList()
-
         if types == 0:
-            frame = mbfs.getArticulationFrame()
+            mbfs.makeFrameList(data_type="a")
         else:
-            frame = mbfs.getWordFrame()
+            mbfs.makeFrameList(data_type="w")
 
-        assert frame != [], "ビットシーケンスデータの抽出に失敗しています"
+        bit_data = mbfs.getBitDataFrame()
+
+        assert bit_data != [], "ビットシーケンスデータの抽出に失敗しています"
 
         # 欠損部分(NaN)を持つ地域をリストから削除
-        have_nan_index_list = mbfs.searchNanElem(frame)
-        data_list = mbfs.deleteNanElem(have_nan_index_list, frame)
+        have_nan_index_list = mbfs.searchNanElem(bit_data)
+        data_list = mbfs.deleteNanElem(have_nan_index_list, bit_data)
         name_list = mbfs.deleteNanElem(have_nan_index_list, name_list)
 
         assert data_list != [], "すべてのデータが欠損であるため、処理が正しく行えませんでした。"
