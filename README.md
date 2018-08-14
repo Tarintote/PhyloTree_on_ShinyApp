@@ -1,4 +1,4 @@
-Shiny_Application
+PhyloTree_on_ShinyApp
 =====================
 
 これは沖縄諸語の言語系統樹を分析するために開発しているRのShinyを用いたwebアプリケーションである。
@@ -10,8 +10,8 @@ Shiny_Application
 
 起動方法
 -----
-1. このShiny_Applicationをインストール
-2. Shiny_Applicationディレクトリにパスを通す
+1. gitからPhyloTree_on_ShinyAppをクローン
+2. PhyloTree_on_ShinyAppディレクトリにパスを通す
 3. ターミナル(command line)上で以下のコマンドを実行
 
         ExecuteApp
@@ -22,12 +22,12 @@ Usage
 
 子音と母音に関するデータベースの形式については以下のファイルらを参考にして欲しい。
 
-    Shiny_Application/ArticulationDataBase/子音入力数値一覧.csv
-    Shiny_Application/ArticulationDataBase/母音入力数値一覧.csv
+    PhyloTree_on_ShinyApp/ArticulationDataBase/子音入力数値一覧.csv
+    PhyloTree_on_ShinyApp/ArticulationDataBase/母音入力数値一覧.csv
 
 単語ファイルの形式については以下のファイルらを参考にして欲しい。
 
-    Shiny_Application/csvFileList/*.csv
+    PhyloTree_on_ShinyApp/csvFileList/*.csv
 
 Dependencies(python)
 ------------
