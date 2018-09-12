@@ -1,10 +1,6 @@
 options(rgl.useNULL=TRUE)
 #options(rgl.printRglwidget=FALSE)
 
-pkgs.name = c("RNeXML", "shiny", "devtools", "reticulate", "phangorn", "phytools",
- "igraph", "ggplot2", "dendextend", "RColorBrewer", "colormap", "gpclib", "maptools", "leaflet",
- "rgl")
-
 gc <- import("generate_controler")
 nex <- import("helper")
 os <- import("os")
