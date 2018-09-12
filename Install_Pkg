@@ -33,7 +33,7 @@ yes | sudo apt-get install python-pip
 #==================================================
 #PhyloTree_on_ShinyAppディレクトリーにあるrequirementsファイルにインストールするパッケージのリストが記述されている
 cd "$this_path"
-pip install -r PhyloTree_on_ShinyApp/requirements
+pip install -r requirements
 
 #==================================================
 # Rのinstall
