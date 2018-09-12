@@ -7,8 +7,8 @@ this_path=`dirname "$0"`
 #==================================================
 # 作法通りapt-getのアップデートで最新に
 #==================================================
-yes | sudo apt-get update
-yes | sudo apt-get upgrade
+#yes | sudo apt-get update
+#yes | sudo apt-get upgrade
 
 #==================================================
 # gitでアプリをclone
@@ -57,11 +57,11 @@ yes | sudo apt-get install libcurl4-openssl-dev
 yes | sudo apt-get install libxml2-dev
 
 #rglをinstallするための前手順 ( install.packages(“rgl”)はいらない)
-yes | sudo apt-get-get install r-cran-rgl
-yes | sudo apt-get-get install xvfb
+yes | sudo apt-get install r-cran-rgl
+yes | sudo apt-get install xvfb
 
 #colormapをinstallするための手順
-yes | sudo apt-get-get install libv8-dev
+yes | sudo apt-get install libv8-dev
 
 #==================================================
 # アプリ出力での日本語ラベル文字化けフォントを修正
