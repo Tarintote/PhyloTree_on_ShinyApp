@@ -12,6 +12,7 @@ import numpy as np
 import codecs
 import glob
 import copy
+import re
 
 import pdb
 
@@ -82,6 +83,7 @@ class GenerateControler(object):
         複数の単語による系統樹生成
         types=0: 素性に基づく距離の生成, otherwise: 音素に基づく距離の生成
         """
+
         if len(self.file_list) == 0:
             return -1
 
@@ -92,15 +94,16 @@ class GenerateControler(object):
         mbfs.setIndecesLabels(index_type=1)
         self.s_name_list = mbfs.getNameIndex()
 
-        all_bit_data = map(lambda file_num: self.getBitData(
+        some_data = map(lambda file_num: self.getBitData(
             file_num, types), range(len(self.file_list)))
 
-        self.bit_frame_list = np.concatenate(all_bit_data, axis=1)
-
         hDM = hdm.HammingDistanceMatrix()
-        hDM.calcHammingDistanceMatrix(self.bit_frame_list)
+        dms = []
+        for sd in some_data:
+            hDM.calcHammingDistanceMatrix(sd)
+            dms.append(hDM.getDistanceMatrix())
 
-        self.distance_matrix = hDM.getDistanceMatrix()
+        self.distance_matrix = sum(dms)
         self.distance_matrix.index = self.s_name_list
         self.distance_matrix.columns = self.s_name_list
 
@@ -108,8 +111,6 @@ class GenerateControler(object):
         """
         指定された単語ファイルから全地域の音素データをビットデータへ変換し、リストにして返す
         """
-        bit_data = []
-        # print(self.file_list[file_number])
 
         with codecs.open(self.file_list[file_number], "r", "Shift-JIS", "ignore") as files:
             mtoshi = pd.read_table(files, delimiter=",")
@@ -121,15 +122,16 @@ class GenerateControler(object):
             else:
                 mbfs.makeFrameList(data_type="w")
 
-            bit_data = mbfs.getBitDataFrame()
+            data_list = np.array(mbfs.getBitDataFrame())
 
-            assert bit_data != [], str(
-                self.file_list[file_number]) + "のファイルに不正文字が含まれている可能性があります。"
+            assert len(data_list) != 0, str(self.file_list[file_number]) + "のファイルに不正文字が含まれている可能性があります。"
 
             bit_data = mbfs.joinAlignments(copy.deepcopy(bit_data))
+            concat_data = np.array(map(lambda x: "".join(np.hstack(x)), data_list))
 
             # あとでconcatenateするために各要素をリストにする必要がある。
-        return map(lambda x: [x], bit_data)
+        #return map(lambda x: [x], bit_data)
+        return concat_data
 
     def generateOneWordFrame(self, types=0):
         """
@@ -145,35 +147,28 @@ class GenerateControler(object):
 
         mbfs = mbf.MakeBitFrame(mtoshi, self.cons, self.vowel)
         mbfs.setIndecesLabels(index_type=0)
-        name_list = mbfs.getNameIndex()
+        name_list = np.array(mbfs.getNameIndex())
+
 
         if types == 0:
-            mbfs.makeFrameList(data_type="a")
+            data_list = np.array(mbfs.getArticulationFrame())
         else:
-            mbfs.makeFrameList(data_type="w")
+            data_list = np.array(mbfs.getWordFrame())
 
-        bit_data = mbfs.getBitDataFrame()
+        assert len(data_list) != 0, "ビットシーケンスデータの抽出に失敗しています"
 
-        assert bit_data != [], "ビットシーケンスデータの抽出に失敗しています"
+        # 連結
+        concat_data = np.array(map(lambda x: "".join(np.hstack(x)), data_list))
 
         # 欠損部分(NaN)を持つ地域をリストから削除
-        have_nan_index_list = mbfs.searchNanElem(bit_data)
-        data_list = mbfs.deleteNanElem(have_nan_index_list, bit_data)
-        name_list = mbfs.deleteNanElem(have_nan_index_list, name_list)
+        nanfilter = [i for i, x in enumerate(concat_data) if len(re.match("\?*",x).group())==0]
+        booler = np.zeros(len(concat_data), dtype=bool)
+        booler[nanfilter] = True
+        data_list = concat_data[booler]
+        name_list = name_list[booler]
 
-        assert data_list != [], "すべてのデータが欠損であるため、処理が正しく行えませんでした。"
+        assert len(data_list) != 0, "すべてのデータが欠損であるため、処理が正しく行えませんでした。"
 
-        align = mbfs.joinAlignments(copy.deepcopy(data_list))
-
-        # 0と1のビット列でないデータ(-9のデータ)を削除
-        deleted_indeces = mbfs.searchLoss(align)
-        c = 0
-        for y in range(len(deleted_indeces)):
-            data_list.pop(deleted_indeces[y] - c)
-            name_list.pop(deleted_indeces[y] - c)
-            c = c + 1
-
-        # data_list = mbfs.joinAlignments(copy.deepcopy(data_list))
         self.bit_frame_list = data_list
         self.s_name_list = name_list
 

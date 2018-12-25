@@ -19,37 +19,34 @@ class HammingDistanceMatrix(object):
         """重み付きハミング距離で距離行列を作成"""
         init_matrix = pd.DataFrame(
             [[0.0 for i in range(len(data))] for k in range(len(data))])
-        col, idx = np.triu_indices_from(init_matrix, k=0)
-        for c, i in zip(col, idx):
-            # ハミング距離に対する類似度重み付け, default=1
-            symilarity = 1
-            # 言語地域間の距離
-            distance = sum(map(lambda x: symilarity * self.calchammingDistance(
-                data[c][x], data[i][x]), range(len(data[c]))))
-            init_matrix[i][c] = distance
+        col, idx = np.triu_indices_from(init_matrix, k=1)
+        dist_array = list(map(lambda x: self.calcHammingDistance(data[x[0]], data[x[1]]), zip(col, idx)))
+
+        init_matrix.values[np.triu_indices_from(
+            init_matrix, k=1)] = dist_array
         init_matrix.T.values[np.triu_indices_from(
-            init_matrix, k=0)] = init_matrix.values[np.triu_indices_from(init_matrix, k=0)]
+            init_matrix, k=1)] = dist_array
+
         self.__distance_matrix = init_matrix
 
-    def calchammingDistance(self, purpose, other):
-        """目的の配列とそれ以外から各々のハミング距離の計算計算して配列に格納"""
-        purpose = list(purpose)
-        other = list(other)
-        str_length = len(purpose)
-        assert str_length == len(other)
+    def calcHammingDistance(self, array1, array2):
+        """2つの配列間のハミング距離の計算して配列に格納"""
+        a1 = list(array1)
+        a2 = list(array2)
+        str_length = len(a1)
+        assert str_length == len(a2)
 
-        skip = 0
-        result_value = 0
+        skip = 0.0
+        result_value = 0.0
 
         for k in range(str_length):
-            if ("?" in purpose[k]) == True or ("?" in other[k]) == True:
-                skip += 1
+            if ("?" == a1[k]) or ("?" == a2[k]):
+                skip += 1.0
                 continue
-            if purpose[k] != other[k]:
-                result_value += 1
+            if a1[k] != a2[k]:
+                result_value += 1.0
 
         if (str_length - skip) != 0:
-            result_value = float(result_value) / (str_length - skip)
-            return result_value
+            return result_value / (str_length - skip)
         else:
             return 0

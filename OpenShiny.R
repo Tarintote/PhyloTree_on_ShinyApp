@@ -1,7 +1,7 @@
 dir.create(path = Sys.getenv("R_LIBS_USER"), showWarnings = FALSE, recursive = TRUE)
 
 if(!require("foreach", character.only=TRUE)){
-  install.packages("foreach", lib=Sys.getenv("R_LIBS_USER"))
+  install.packages("foreach", lib=Sys.getenv("R_LIBS_USER"), dep=TRUE)
   require("foreach", character.only=TRUE)
 }
 
@@ -10,7 +10,7 @@ pkgs.name = c("RNeXML", "shiny", "devtools", "reticulate", "phangorn", "phytools
 
 foreach(i = pkgs.name, .packages="foreach") %do%{
     if(!require(i, character.only=TRUE)){
-      install.packages(i, lib=Sys.getenv("R_LIBS_USER"))
+      install.packages(i, lib=Sys.getenv("R_LIBS_USER"), dep=TRUE)
       library(i, character.only=TRUE)
     }
 }
