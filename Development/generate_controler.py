@@ -12,6 +12,7 @@ import numpy as np
 import codecs
 import glob
 import copy
+import re
 
 import pdb
 
@@ -77,7 +78,7 @@ class GenerateControler(object):
         self.cons = cdb.showTable()
         self.vowel = vdb.showTable()
 
-    def sumDataFrame(self, types=0):
+    def someWordFrame(self, types=0):
         # 複数の単語による系統樹生成
         # types=0: 素性に基づく距離の生成, otherwise: 音素に基づく距離の生成
         if len(self.file_list) == 0:
@@ -90,43 +91,37 @@ class GenerateControler(object):
         mbfs.makeIndeces(index_type=1)
         self.s_name_list = mbfs.getNameIndex()
 
-        map(lambda file_num: self.make_data_frame(
-            file_num, self.s_name_list, types), range(len(self.file_list)))
+        some_data = map(lambda file_num: self.SamplingData(
+            file_num, types), range(len(self.file_list)))
 
         hDM = hdm.HammingDistanceMatrix()
-        hDM.calcHammingDistanceMatrix(self.bit_frame_list)
+        dms = []
+        for sd in some_data:
+            hDM.calcHammingDistanceMatrix(sd)
+            dms.append(hDM.getDistanceMatrix())
 
-        self.distance_matrix = hDM.getDistanceMatrix()
+        self.distance_matrix = sum(dms) #hDM.getDistanceMatrix()
         self.distance_matrix.index = self.s_name_list
         self.distance_matrix.columns = self.s_name_list
 
-    def make_data_frame(self, file_number, area_name_list, types):
+    def SamplingData(self, file_number, types):
         data_list = []
         print(self.file_list[file_number])
 
         with codecs.open(self.file_list[file_number], "r", "Shift-JIS", "ignore") as files:
             mtoshi = pd.read_table(files, delimiter=",")
 
-            mbfs = mbf.MakeBitFrame(mtoshi, self.cons, self.vowel)
-            mbfs.makeIndeces(index_type=2)
-
-            mbfs.makeFrameList()
-
-            if types == 0:
-                data_list = mbfs.getArticulationFrame()
-            else:
-                data_list = mbfs.getWordFrame()
-
-            assert data_list != [], str(self.file_list[file_number])
-
-            data_list = mbfs.joinAlignments(copy.deepcopy(data_list))
-
-            if len(self.bit_frame_list) == 0:
-                self.bit_frame_list = data_list
-            else:
-                self.bit_frame_list = np.array([np.hstack((x, y)) for x,
-                                                y in zip(self.bit_frame_list, data_list)])
-        return 0
+        mbfs = mbf.MakeBitFrame(mtoshi, self.cons, self.vowel)
+        mbfs.makeIndeces(index_type=2)
+        mbfs.makeFrameList()
+        if types == 0:
+            data_list = np.array(mbfs.getArticulationFrame())
+        else:
+            data_list = np.array(mbfs.getWordFrame())
+        assert len(data_list) != 0, str(self.file_list[file_number])
+        concat_data = np.array(map(lambda x: "".join(np.hstack(x)), data_list))
+        
+        return concat_data
 
     def oneWordFrame(self, init_table=0, types=0):
         """
@@ -142,42 +137,29 @@ class GenerateControler(object):
 
         mbfs = mbf.MakeBitFrame(mtoshi, self.cons, self.vowel)
         mbfs.makeIndeces(index_type=0)
-        name_list = mbfs.getNameIndex()
+        name_list = np.array(mbfs.getNameIndex())
 
         mbfs.makeFrameList()
 
         if types == 0:
-            frame = np.array(mbfs.getArticulationFrame())
+            data_list = np.array(mbfs.getArticulationFrame())
         else:
-            frame = np.array(mbfs.getWordFrame())
+            data_list = np.array(mbfs.getWordFrame())
 
-        assert frame != [], "ビットシーケンスデータの抽出に失敗しています"
+        assert len(data_list) != 0, "ビットシーケンスデータの抽出に失敗しています"
+
+        # 連結
+        concat_data = np.array(map(lambda x: "".join(np.hstack(x)), data_list))
 
         # 欠損部分(NaN)を持つ地域をリストから削除
-        #nanfilter = [i for i, x in frame if np.nan not in x]
+        nanfilter = [i for i, x in enumerate(concat_data) if len(re.match("\?*",x).group())==0]
+        booler = np.zeros(len(concat_data), dtype=bool)
+        booler[nanfilter] = True
+        data_list = concat_data[booler]
+        name_list = name_list[booler]
 
-        #filter(lambda x: ~ np.isnan(arr).any(axis=1), frame)
-        #booler = np.zeros(len(frame), dtype=bool)
-        #booler[nanfilter] = True
-        #data_list = frame[booler]
-        #name_list = name_list[booler]
-        have_nan_index_list = mbfs.searchNanElem(frame)
-        data_list = mbfs.deleteNanElem(have_nan_index_list, frame)
-        name_list = mbfs.deleteNanElem(have_nan_index_list, name_list)
+        assert len(data_list) != 0, "すべてのデータが欠損であるため、処理が正しく行えませんでした。"
 
-        assert data_list != [], "すべてのデータが欠損であるため、処理が正しく行えませんでした。"
-
-        align = mbfs.joinAlignments(copy.deepcopy(data_list))
-
-        # 0と1のビット列でないデータ(-9のデータ)を削除
-        deleted_indeces = mbfs.searchLoss(align)
-        c = 0
-        for y in range(len(deleted_indeces)):
-            data_list.pop(deleted_indeces[y] - c)
-            name_list.pop(deleted_indeces[y] - c)
-            c = c + 1
-
-        # data_list = mbfs.joinAlignments(copy.deepcopy(data_list))
         self.bit_frame_list = data_list
         self.s_name_list = name_list
 

@@ -129,7 +129,7 @@ shinyServer(
                 if (length(file_list) == 1){
                     gcc$oneWordFrame(types=selectArt_VC())
                 }else{
-                    gcc$sumDataFrame(types=selectArt_VC())
+                    gcc$someWordFrame(types=selectArt_VC())
                 }
                 gcc$getDistanceMatrix(path=filepath)
                 return(0)
