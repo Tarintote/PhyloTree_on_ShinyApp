@@ -72,8 +72,8 @@ class MakeBitFrame(object):
         # map(lambda x: lookupBitDataFromOnso(
         #        x[0], x[1]), itertools.product(kk, k))
         for locate_idx in range(self.__locate_index, self.index_size):
-            self.__data_frame.append(np.array(
-                map(lambda x: self.lookupBitDataFromOnso(locate_idx, x, data_type), fc)).flatten())
+            self.__data_frame.append(list(
+                map(lambda x: self.lookupBitDataFromOnso(locate_idx, x, data_type), fc)))
 
         assert self.__data_frame != [], "おかしいな〜"
 
@@ -93,7 +93,7 @@ class MakeBitFrame(object):
                 # print("第{0}列目の子音:{1}がデータベース内から見つかりませんでした。欠損(-9)を割り当てます".format(kk,
                 #                                                               self.table.T.iloc[k][kk]))
                 # やっぱり音落ち(-1)を割り当てる
-                index = self.vowel.index.size - 2
+                index = self.cons.index.size - 2
 
             if data_type == "a":
                 return self.cons.iloc[index][:5].values.tolist()

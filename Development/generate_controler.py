@@ -126,7 +126,6 @@ class GenerateControler(object):
 
             assert len(data_list) != 0, str(self.file_list[file_number]) + "のファイルに不正文字が含まれている可能性があります。"
 
-            bit_data = mbfs.joinAlignments(copy.deepcopy(bit_data))
             concat_data = np.array(map(lambda x: "".join(np.hstack(x)), data_list))
 
             # あとでconcatenateするために各要素をリストにする必要がある。
@@ -151,9 +150,11 @@ class GenerateControler(object):
 
 
         if types == 0:
-            data_list = np.array(mbfs.getArticulationFrame())
+            mbfs.makeFrameList(data_type="a")
         else:
-            data_list = np.array(mbfs.getWordFrame())
+            mbfs.makeFrameList(data_type="w")
+
+        data_list = np.array(mbfs.getBitDataFrame())
 
         assert len(data_list) != 0, "ビットシーケンスデータの抽出に失敗しています"
 
