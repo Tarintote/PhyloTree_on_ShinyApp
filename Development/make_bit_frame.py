@@ -73,7 +73,7 @@ class MakeBitFrame(object):
                         # print("第{0}列目の子音:{1}がデータベース内から見つかりませんでした。欠損(-9)を割り当てます".format(kk,
                         #                                                               self.table.T.iloc[k][kk]))
                         # やっぱり音落ち(-1)を割り当てる
-                        index = self.vowel.index.size - 2
+                        index = self.cons.index.size - 2
 
                     art_lists = art_lists + \
                         self.cons.iloc[index][:5].values.tolist()

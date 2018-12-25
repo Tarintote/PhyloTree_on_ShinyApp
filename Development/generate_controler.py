@@ -147,13 +147,20 @@ class GenerateControler(object):
         mbfs.makeFrameList()
 
         if types == 0:
-            frame = mbfs.getArticulationFrame()
+            frame = np.array(mbfs.getArticulationFrame())
         else:
-            frame = mbfs.getWordFrame()
+            frame = np.array(mbfs.getWordFrame())
 
         assert frame != [], "ビットシーケンスデータの抽出に失敗しています"
 
         # 欠損部分(NaN)を持つ地域をリストから削除
+        #nanfilter = [i for i, x in frame if np.nan not in x]
+
+        #filter(lambda x: ~ np.isnan(arr).any(axis=1), frame)
+        #booler = np.zeros(len(frame), dtype=bool)
+        #booler[nanfilter] = True
+        #data_list = frame[booler]
+        #name_list = name_list[booler]
         have_nan_index_list = mbfs.searchNanElem(frame)
         data_list = mbfs.deleteNanElem(have_nan_index_list, frame)
         name_list = mbfs.deleteNanElem(have_nan_index_list, name_list)
