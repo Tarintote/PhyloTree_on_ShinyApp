@@ -1,29 +1,9 @@
 options(rgl.useNULL=TRUE)
 #options(rgl.printRglwidget=FALSE)
 
-library(shiny)
-library(devtools)
-library(reticulate)
-library(phangorn) ## phylogenetic network
-library(phytools)
-library(phylocanvas)
-library(igraph)
-
-library(ggplot2)
-library(dendextend)
-library(RColorBrewer)
-library(colormap)
-
-library(gpclib) # maptools の前提パッケージ gpclib を R で使うのに必要
-library(maptools)
-library(leaflet)
-
-#library(shinyRGL)
-library(rgl)
-library(foreach)
-
 gc <- import("generate_controler")
 nex <- import("helper")
+os <- import("os")
 
 source("helpers.R")
 
@@ -53,6 +33,11 @@ distance.object <- setRefClass(
 dis <- distance.object$new()
 count.handlar <- 0
 
+cwd <- os$getcwd()
+dirpath <- os$path$join(cwd, "DistanceStorage")
+if(os$path$exists(dirpath)!=TRUE) os$mkdir(dirpath)
+filepath <- os$path$join(dirpath, "distance.csv")
+
 ## サーバロジックの定義。ヒストグラムを描く
 shinyServer(
     function(input, output, session) {
@@ -72,7 +57,7 @@ shinyServer(
             if(is.null(input_file))
                 return()
             data <- read.table(input_file$datapath, header=T, sep=",", skip=0, fileEncoding="shift_jis",comment.char="")
-            storage_path = paste("./DataBaseStorage", input_file$name, sep="/")
+            storage_path = paste("./DataBase", input_file$name, sep="/")
             write.table(data, storage_path, quote=T, append=F, col.names=T, row.names=F, sep=",", fileEncoding='shift-JIS')
             return(storage_path)
         })
@@ -92,7 +77,7 @@ shinyServer(
             if(is.null(input_file))
                 return()
             data <- read.table(input_file$datapath, header=T, sep=",", skip=0, fileEncoding="shift_jis", comment.char="")
-            storage_path = paste("./DataBaseStorage", input_file$name, sep="/")
+            storage_path = paste("./DataBase", input_file$name, sep="/")
             write.table(data, storage_path, quote=T, append=F, col.names=T, row.names=F, sep=",", fileEncoding='shift-JIS')
             return(storage_path)
         })
@@ -137,15 +122,20 @@ shinyServer(
         generateDistance <- reactive({
             file_list <- selectFile()
             print(file_list)
-            gcc <- gc$GenerateControler(file_list, vowelDataBaseFilePath(), consonantDataBaseFilePath())
-            #gcc.makeUsingFileList('./csvFileList/notUsingCSV.dat')
-            gcc$mainPreProccess()
-            if (length(file_list) == 1){
-                gcc$oneWordFrame(types=selectArt_VC())
+            if(length(file_list)!=0){
+                gcc <- gc$GenerateControler(file_list, vowelDataBaseFilePath(), consonantDataBaseFilePath())
+                #gcc.makeUsingFileList('./csvFileList/notUsingCSV.dat')
+                gcc$mainPreProccess()
+                if (length(file_list) == 1){
+                    gcc$oneWordFrame(types=selectArt_VC())
+                }else{
+                    gcc$someWordFrame(types=selectArt_VC())
+                }
+                gcc$getDistanceMatrix(path=filepath)
+                return(0)
             }else{
-                gcc$sumDataFrame(types=selectArt_VC())
+                return(1)
             }
-            gcc$getDistanceMatrix()$to_csv('./DistanceStorage/distance.csv', sep=',')
         })
 
         observeEvent(input$select_all, {
@@ -183,11 +173,15 @@ shinyServer(
         ###############
 
         tree <- reactive({
-            generateDistance()
-            dis$distance.matrix <- getDistance()
-            update_checkbox.handlar()
-            dist_ <- area_selected_distance_matrix(dis$distance.matrix, input$area_check_box)
-            Phylogenetic_Tree(dist_)
+            getFlag = generateDistance()
+            if(getFlag==0){
+                dis$distance.matrix <- getDistance()
+                update_checkbox.handlar()
+                dist_ <- area_selected_distance_matrix(dis$distance.matrix, input$area_check_box)
+                return(Phylogenetic_Tree(dist_))
+            }else{
+                return(1)
+            }
         })
 
         tree.plot <- eventReactive(input$plot_action,{
@@ -195,7 +189,9 @@ shinyServer(
             par(family = "HiraKakuProN-W3")
             #direction="downwords"
             #plot(tree(), type="p", "3D", cex=0.8 ,use.edge.length = TRUE, tip.color="violetred")
-            phylocanvas(tree(), treetype = input$tree.type, alignlabels = F)
+            plotobj = tree()
+            if(is.list(plotobj)==TRUE)
+                phylocanvas(plotobj, treetype = input$tree.type, alignlabels = F)
         })
 
         output$tree <- renderPhylocanvas({
@@ -216,22 +212,27 @@ shinyServer(
         #####################
 
         cluster.plot <- eventReactive(input$plot_action,{
-            generateDistance()
-            dis$distance.matrix <- getDistance()
+            getFlag = generateDistance()
+            if(getFlag==0){
+                dis$distance.matrix <- getDistance()
 
-            update_checkbox.handlar()
-            dist_ <- area_selected_distance_matrix(dis$distance.matrix, input$area_check_box)
-            phy <- hclust(as.dist(dist_), method="average")
+                update_checkbox.handlar()
+                dist_ <- area_selected_distance_matrix(dis$distance.matrix, input$area_check_box)
+                phy <- hclust(as.dist(dist_), method="average")
 
-            cut_height <- input$height_slider
-            phy <- color_labels(phy, h = cut_height)
-            updateSliderInput(session, "height_slider", value = input$height_slider, min = 0, max = attributes(phy)$height)
+                cut_height <- input$height_slider
+                phy <- color_labels(phy, h = cut_height)
+                updateSliderInput(session, "height_slider", value = input$height_slider, min = 0, max = attributes(phy)$height)
 
-            #Set3は最大12色までしかない
-            colors_pal <- brewer.pal(12, "Set3")
-            # クラスタ番号と対応した色ベクトル(ラベル順)
-            col.cl <- colors_pal[cutree(phy, h=cut_height, order_clusters_as_data = F)]
-            dend <- phy %>% dendextend::set("labels_colors", value = col.cl)
+                #Set3は最大12色までしかない
+                colors_pal <- brewer.pal(12, "Set3")
+                # クラスタ番号と対応した色ベクトル(ラベル順)
+                col.cl <- colors_pal[cutree(phy, h=cut_height, order_clusters_as_data = F)]
+                dend <- phy %>% dendextend::set("labels_colors", value = col.cl)
+                return(dend)
+            }else{
+                return(1)
+            }
         })
 
         output$clustering <- renderPlot({
@@ -274,10 +275,12 @@ shinyServer(
 
         observe({
             dend <- cluster.plot()
-            leafletProxy("leaflet_map") %>%
-                clearShapes() %>%
-                fitBounds(min(points()$x), min(points()$y), max(points()$x), max(points()$y)) %>%
-                addCircleMarkers(lng=points()$x, lat=points()$y, radius=10, popup=rownames(data.frame(labels_colors(dend))), color=data.frame(labels_colors(dend))[,] )
+            if(is.list(dend)==TRUE){
+                leafletProxy("leaflet_map") %>%
+                    clearShapes() %>%
+                    fitBounds(min(points()$x), min(points()$y), max(points()$x), max(points()$y)) %>%
+                    addCircleMarkers(lng=points()$x, lat=points()$y, radius=10, popup=rownames(data.frame(labels_colors(dend))), color=data.frame(labels_colors(dend))[,] )
+            }
         })
 
         ###############
@@ -287,18 +290,23 @@ shinyServer(
         #######################
 
         network <- reactive({
-            generateDistance()
-            dis$distance.matrix <- getDistance()
-            update_checkbox.handlar()
-            dist_ <- area_selected_distance_matrix(dis$distance.matrix, input$area_check_box)
-            label_names <- dimnames(dist_)[[1]]
-            new_label_of_Index = c()
-            foreach(x=1:length(label_names)) %do%{
-                new_label_of_Index <-c(new_label_of_Index, paste("a", x, sep=("")))
+            getFlag = generateDistance()
+            if(getFlag==0){
+                dis$distance.matrix <- getDistance()
+                update_checkbox.handlar()
+                dist_ <- area_selected_distance_matrix(dis$distance.matrix, input$area_check_box)
+                label_names <- dimnames(dist_)[[1]]
+                new_label_of_Index = c()
+                foreach(x=1:length(label_names)) %do%{
+                    new_label_of_Index <-c(new_label_of_Index, paste("a", x, sep=("")))
+                }
+                nex$makeNexusFile(dist_, "../Nexusfile/", "distance", new_label_of_Index)
+                system("../SplitsTree/SplitsTree.app/Contents/MacOS/JavaApplicationStub -g -c ../commandfile.split")
+                #system("'/mnt/c/Program Files/SplitsTree/SplitsTree.exe' -g -c ../commandfile.split")
+                return(phylogenetic_network(label_names))
+            }else{
+                return(1)
             }
-            nex$makeNexusFile(dist_, "../Nexusfile/", "distance", new_label_of_Index)
-            system("../SplitsTree/SplitsTree.app/Contents/MacOS/JavaApplicationStub -g -c ../commandfile.split")
-            phylogenetic_network(label_names)
         })
 
         network.plot <- eventReactive(input$plot_action,{

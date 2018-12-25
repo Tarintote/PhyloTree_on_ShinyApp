@@ -2,9 +2,9 @@
 # -*- coding: UTF-8 -*-
 
 # from __future__ import unicode_literals
-import make_database as md
+import convert_2bit as c2b  # md
 import make_bit_frame as mbf
-import make_distance_matrix as mdm
+import hamming_distance_matrix as hdm
 import helper
 import sys
 import pandas as pd
@@ -12,6 +12,7 @@ import numpy as np
 import codecs
 import glob
 import copy
+import re
 
 import pdb
 
@@ -34,69 +35,52 @@ class GenerateControler(object):
         # self.file_list = map(self.unicode_, input_files_path)
         # shiny-app(R)で実行時はこちら
         self.file_list = input_files_path
+
         self.data_frame_list = []
         self.bit_frame_list = []
-        self.orig_frame_list = []
         self.s_name_list = []
         with codecs.open(cons_file_path, "r", "Shift - JIS", "ignore") as file:
             self.cons = pd.read_table(file, delimiter=",")
         with codecs.open(vowel_file_path, "r", "Shift-JIS", "ignore") as file:
             self.vowel = pd.read_table(file, delimiter=",")
-        self.cons_orig = copy.deepcopy(self.cons)
-        self.vowel_orig = copy.deepcopy(self.vowel)
 
     def rstrip_(self, ls):
         # 引数なしの場合、文字列の末尾の空白文字、改行文字を除去した新しい文字列を返します。
         # 引数を与えた場合、引数に含まれる文字を文字列から削除した文字列を返す。
         return ls.rstrip()
 
-    def makeUsingFileList(self, not_using_file_path):
-        filename = []
-        using_list = []
-        # self.file_list = map(self.unicode_, self.file_list)
-        # isinstance() ふたつの引数がオブジェクトとクラスまたはそのスーパークラスの関係にあれば True を返す
-        if isinstance(self.file_list, list) == False:
-            filename.append(self.file_list.split("/")[-1])
-        else:
-            for i in range(len(self.file_list)):
-                filename.append((self.file_list[i].split("/"))[-1])
-
-        with open(not_using_file_path) as files:
-            lines = files.readlines()
-            not_usings = map(self.unicode_, map(self.rstrip_, lines))
-            # not_usings = list(map(self.unicode_, map(self.rstrip_, lines)))
-
-        if len(filename) != 1:
-            for l in range(len(filename)):
-                # lines.rstrip():
-                # and isinstance(self.file_list, list) == True:
-                if filename[l] not in not_usings:
-                    using_list.append(self.file_list[l])
-            self.file_list = using_list
-        else:
-            if filename in not_usings:
-                print("選択されたファイルには不正文字が含まれています。")
-        return self.file_list
-
     def mainPreProccess(self):
-        vow_col = (self.vowel.columns == "母音").tolist().index(True)
-        vow_dot_index = (self.vowel.iloc[0:self.vowel.index.size,
-                                         vow_col] == ".").tolist().index(True)
-        vdb = md.VCDataBase(self.vowel.copy(), vow_dot_index)
-        cons_col = (self.cons.columns == "子音").tolist().index(True)
-        cons_dot_index = (self.cons.iloc[0: self.cons.index.size,
-                                         cons_col] == ".").tolist().index(True)
-        cdb = md.VCDataBase(self.cons.copy(), cons_dot_index)
-        vdb.generate_table_for_ward()
-        vdb.generate_table_for_art()
-        cdb.generate_table_for_ward()
-        cdb.generate_table_for_art()
+        """母音と子音の前処理(ビット列変換)"""
+        """母音"""
+        vowel_col = self.vowel.columns.tolist().index("母音")
+        vowel_dot_idx = (
+            self.vowel.iloc[0:self.vowel.index.size, vowel_col] == ".").tolist().index(True)
+        vowel_phoneme_Data = pd.DataFrame(np.array(
+            self.vowel.iloc[:vowel_dot_idx, 2:7]), index=self.vowel.iloc[:vowel_dot_idx, 1].values, columns=self.vowel.columns[2:7])
+        vowel_phoneme_Idx = pd.DataFrame(range(
+            vowel_dot_idx-2)+[-1, -9], index=self.vowel.iloc[:vowel_dot_idx, 1].values, columns=["idx"])
+        vowel_Data = pd.concat([vowel_phoneme_Data, vowel_phoneme_Idx], axis=1)
+        vdb = c2b.VCData2bit(vowel_Data, vowel_dot_idx)
+
+        """子音"""
+        cons_col = self.cons.columns.tolist().index("子音")
+        cons_dot_idx = (
+            self.cons.iloc[0: self.cons.index.size, cons_col] == ".").tolist().index(True)
+        cons_phoneme_Data = pd.DataFrame(np.array(
+            self.cons.iloc[:cons_dot_idx, 2:7]), index=self.cons.iloc[:cons_dot_idx, 1].values, columns=self.cons.columns[2:7])
+        cons_phoneme_Idx = pd.DataFrame(range(
+            cons_dot_idx-2)+[-1, -9], index=self.cons.iloc[:cons_dot_idx, 1].values, columns=["idx"])
+        cons_Data = pd.concat([cons_phoneme_Data, cons_phoneme_Idx], axis=1)
+        cdb = c2b.VCData2bit(cons_Data, cons_dot_idx)
+
+        vdb.convert_value2bit_on_table()
+        cdb.convert_value2bit_on_table()
         self.cons = cdb.showTable()
         self.vowel = vdb.showTable()
 
-    def sumDataFrame(self, types=0):
+    def someWordFrame(self, types=0):
         # 複数の単語による系統樹生成
-        # types=0であればarticulationに基づく距離の生成, otherwise母音子音に基づく距離の生成
+        # types=0: 素性に基づく距離の生成, otherwise: 音素に基づく距離の生成
         if len(self.file_list) == 0:
             return -1
 
@@ -105,119 +89,86 @@ class GenerateControler(object):
 
         mbfs = mbf.MakeBitFrame(init, self.cons, self.vowel)
         mbfs.makeIndeces(index_type=1)
-        area_name_list = mbfs.getNameIndex()
+        self.s_name_list = mbfs.getNameIndex()
 
-        name_list = copy.deepcopy(area_name_list)
-        # pdb.set_trace()
-        # for fl in range(0, len(self.file_list)):
-        map(lambda x: self.make_data_frame(x, area_name_list, types), [
-            i for i in range(0, len(self.file_list))])
-        self.s_name_list = name_list
-        mDM = mdm.MakeDistanceMatrix()
-        mDM.makeHammDistanceFrame(self.bit_frame_list, self.orig_frame_list)
-        df = mDM.getDistanceFrame()
-        print(df)
-        self.distance_matrix = pd.DataFrame(
-            df, self.s_name_list, self.s_name_list)
+        some_data = map(lambda file_num: self.SamplingData(
+            file_num, types), range(len(self.file_list)))
 
-    def make_data_frame(self, fl, area_name_list, types):
+        hDM = hdm.HammingDistanceMatrix()
+        dms = []
+        for sd in some_data:
+            hDM.calcHammingDistanceMatrix(sd)
+            dms.append(hDM.getDistanceMatrix())
+
+        self.distance_matrix = sum(dms) #hDM.getDistanceMatrix()
+        self.distance_matrix.index = self.s_name_list
+        self.distance_matrix.columns = self.s_name_list
+
+    def SamplingData(self, file_number, types):
         data_list = []
-        with codecs.open(self.file_list[fl], "r", "Shift-JIS", "ignore") as files:
+        print(self.file_list[file_number])
+
+        with codecs.open(self.file_list[file_number], "r", "Shift-JIS", "ignore") as files:
             mtoshi = pd.read_table(files, delimiter=",")
-            # print(self.file_list[fl])
 
-            mbfs = mbf.MakeBitFrame(mtoshi, self.cons, self.vowel)
-            mbfs.makeIndeces(index_type=2)
-            # word_name_list = mbfs.getNameIndex()
-            # name_list = [x + "/" + y for x,
-            #             y in zip(name_list, word_name_list)]
-
-            if mbfs.makeFrameList(self.cons_orig, self.vowel_orig) != 0:
-                return 0
-
-            if types == 0:
-                data_list = mbfs.getArticulationFrame()
-                origin_data_list = mbfs.get_Original_ArticulationFrame()
-            else:
-                data_list = mbfs.getWordFrame()
-
-            if data_list != []:
-                print(self.file_list[fl])
-            else:
-                return 0
-
-            #data_list = mbfs.joinAlignments(copy.deepcopy(data_list))
-
-            if len(self.bit_frame_list) == 0:
-                self.bit_frame_list = data_list
-                self.orig_frame_list = origin_data_list
-            else:
-                self.bit_frame_list = np.array([np.hstack((x, y)) for x,
-                                                y in zip(self.bit_frame_list, data_list)])
-                self.orig_frame_list = np.array([np.hstack((x, y)) for x,
-                                                 y in zip(self.orig_frame_list, origin_data_list)])
-        return 0
+        mbfs = mbf.MakeBitFrame(mtoshi, self.cons, self.vowel)
+        mbfs.makeIndeces(index_type=2)
+        mbfs.makeFrameList()
+        if types == 0:
+            data_list = np.array(mbfs.getArticulationFrame())
+        else:
+            data_list = np.array(mbfs.getWordFrame())
+        assert len(data_list) != 0, str(self.file_list[file_number])
+        concat_data = np.array(map(lambda x: "".join(np.hstack(x)), data_list))
+        
+        return concat_data
 
     def oneWordFrame(self, init_table=0, types=0):
-        # def oneWordFrame(self, init_table, types=0):
-        # １単語による距離の生成
-        # types=0であればarticulationに基づく距離の生成, otherwise母音子音に基づく距離の生成
-        # pdb.set_trace()
-        # if len(self.file_list) != 1:
-        #    print("oneWordFrame: 渡されたファイルが1つではなかったのでリストの最初の要素のみを用います。")
-        #    self.file_list = self.file_list[0]
+        """
+        １単語による距離の生成
+        types=0: 素性に基づく距離の生成, otherwise: 音素に基づく距離の生成
+        """
+
         have_nan_index_list = []
-        # with codecs.open(self.file_list, "r", "Shift-JIS", "ignore") as files:
+
         with codecs.open(self.file_list, "r", "Shift-JIS", "ignore") as files:
             mtoshi = pd.read_table(files, delimiter=",")
         print(self.file_list)
 
         mbfs = mbf.MakeBitFrame(mtoshi, self.cons, self.vowel)
-        mbfs.makeFrameList(self.cons_orig, self.vowel_orig)
         mbfs.makeIndeces(index_type=0)
-        # mbfs.makeIndeces_from_another_table(init_table, index_type=0)
+        name_list = np.array(mbfs.getNameIndex())
 
-        name_list = mbfs.getNameIndex()
+        mbfs.makeFrameList()
+
         if types == 0:
-            frame = mbfs.getArticulationFrame()
-            origin_data = mbfs.get_Original_ArticulationFrame()
+            data_list = np.array(mbfs.getArticulationFrame())
         else:
-            frame = mbfs.getWordFrame()
+            data_list = np.array(mbfs.getWordFrame())
 
-        # 欠損部分を持つ地域のindex列をリストから削除
-        have_nan_index_list = mbfs.searchNanElem(frame)
-        data_list = mbfs.deleteNanElem(have_nan_index_list, frame)
-        origin_data_list = mbfs.deleteNanElem(have_nan_index_list, origin_data)
+        assert len(data_list) != 0, "ビットシーケンスデータの抽出に失敗しています"
 
-        name_list = mbfs.deleteNanElem(have_nan_index_list, name_list)
+        # 連結
+        concat_data = np.array(map(lambda x: "".join(np.hstack(x)), data_list))
 
-        align = mbfs.joinAlignments(copy.deepcopy(data_list))
-        deleted_indeces = mbfs.searchLoss(align)
-        c = 0
-        for y in range(len(deleted_indeces)):
-            data_list.pop(deleted_indeces[y] - c)
-            name_list.pop(deleted_indeces[y] - c)
-            origin_data_list.pop(deleted_indeces[y] - c)
-            c = c + 1
+        # 欠損部分(NaN)を持つ地域をリストから削除
+        nanfilter = [i for i, x in enumerate(concat_data) if len(re.match("\?*",x).group())==0]
+        booler = np.zeros(len(concat_data), dtype=bool)
+        booler[nanfilter] = True
+        data_list = concat_data[booler]
+        name_list = name_list[booler]
 
-        #data_list = mbfs.joinAlignments(copy.deepcopy(data_list))
+        assert len(data_list) != 0, "すべてのデータが欠損であるため、処理が正しく行えませんでした。"
+
         self.bit_frame_list = data_list
-        self.orig_frame_list = origin_data_list
         self.s_name_list = name_list
 
-        mDM = mdm.MakeDistanceMatrix()
-        mDM.makeHammDistanceFrame(data_list, origin_data_list)
-        df = mDM.getDistanceFrame()
-        data_frame = pd.DataFrame(df, name_list, name_list)
-        self.distance_matrix = data_frame
+        hDM = hdm.HammingDistanceMatrix()
+        hDM.calcHammingDistanceMatrix(data_list)
+        self.distance_matrix = hDM.getDistanceMatrix()
+        self.distance_matrix.index = name_list
+        self.distance_matrix.columns = name_list
 
-    def getDistanceMatrix(self, types=0):
-        return self.distance_matrix  # helper.set_labels(self.distance_matrix)
-
-    def calcTwoNorm(self, vectorList):
-        if len(vectorList) == 1:
-            return vectorList[0]
-        sum_value = 0
-        for i in vectorList:
-            sum_value = sum_value + i * i
-        return np.sqrt(sum_value)
+    def getDistanceMatrix(self, path=None):
+        # helper.set_labels(self.distance_matrix)
+        return self.distance_matrix.to_csv(path, sep=',')

@@ -1,0 +1,82 @@
+#!/bin/bash
+
+echo 'Install necesary pkg for my Application on ubuntu'
+
+this_path=`dirname "$0"`
+
+#==================================================
+# 作法通りapt-getのアップデートで最新に
+#==================================================
+#yes | sudo apt-get update
+#yes | sudo apt-get upgrade
+
+#==================================================
+# gitでアプリをclone
+# レポジトリーのなかにこのスクリプトが置いてあるのに、レポジトリーをインストールする手順も含めるという矛盾
+#==================================================
+#git clone https://github.com/Tarintote/PhyloTree_on_ShinyApp.git
+
+#==================================================
+# 念のためemacsをインストールしとこ...
+#==================================================
+yes | sudo apt-get install emacs24
+
+#==================================================
+# python2&pipのインストール
+#==================================================
+yes | sudo apt-get install python2.7
+yes | sudo apt-get install python-pip
+
+#==================================================
+# pythonの必要なパッケージをインストール
+# このrequirementsどっか置けねーかな
+#==================================================
+#PhyloTree_on_ShinyAppディレクトリーにあるrequirementsファイルにインストールするパッケージのリストが記述されている
+cd "$this_path"
+pip install -r requirements
+
+#==================================================
+# Rのinstall
+#==================================================
+yes | sudo apt-get install r-base
+
+#デフォルトだとRのversion3.2.3がinstallされているので3.3.1以上にupgradeしないといけない(2018/08/13)
+
+yes | sudo add-apt-get-repository ppa:marutter/rrutter
+yes | sudo apt-get update
+yes | sudo apt-get full-upgrade
+
+#==================================================
+# Rのパッケージインストールするのに必要なライブラリーをinstall
+#==================================================
+#libtoolsをinstallするためのライブラリーをinstall
+yes | sudo apt-get install libssl-dev
+yes | sudo apt-get install libcurl4-openssl-dev
+
+#phylocanvas をinstallするための前手順
+yes | sudo apt-get install libxml2-dev
+
+#rglをinstallするための前手順 ( install.packages(“rgl”)はいらない)
+yes | sudo apt-get install r-cran-rgl
+yes | sudo apt-get install xvfb
+
+#colormapをinstallするための手順
+yes | sudo apt-get install libv8-dev
+
+#==================================================
+# アプリ出力での日本語ラベル文字化けフォントを修正
+#==================================================
+#IPAサイトから2書体パック(IPAex明朝(Ver.003.01)、IPAexゴシック(Ver.003.01))をDL
+cd ~
+wget http://dl.ipafont.ipa.go.jp/IPAexfont/IPAexfont00301.zip
+
+#解凍する
+mkdir ~/.fonts
+cp IPAexfont00301.zip ~/.fonts
+cd ~/.fonts
+unzip IPAexfont00301.zip
+
+#フォントのキャッシュを更新
+fc-cache -fv
+
+exit
