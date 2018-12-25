@@ -78,9 +78,12 @@ class GenerateControler(object):
         self.cons = cdb.showTable()
         self.vowel = vdb.showTable()
 
-    def someWordFrame(self, types=0):
-        # 複数の単語による系統樹生成
-        # types=0: 素性に基づく距離の生成, otherwise: 音素に基づく距離の生成
+    def generateSomeWordFrame(self, types=0):
+        """
+        複数の単語による系統樹生成
+        types=0: 素性に基づく距離の生成, otherwise: 音素に基づく距離の生成
+        """
+
         if len(self.file_list) == 0:
             return -1
 
@@ -88,10 +91,10 @@ class GenerateControler(object):
             init = pd.read_table(filer, delimiter=",")
 
         mbfs = mbf.MakeBitFrame(init, self.cons, self.vowel)
-        mbfs.makeIndeces(index_type=1)
+        mbfs.setIndecesLabels(index_type=1)
         self.s_name_list = mbfs.getNameIndex()
 
-        some_data = map(lambda file_num: self.SamplingData(
+        some_data = map(lambda file_num: self.getBitData(
             file_num, types), range(len(self.file_list)))
 
         hDM = hdm.HammingDistanceMatrix()
@@ -100,30 +103,37 @@ class GenerateControler(object):
             hDM.calcHammingDistanceMatrix(sd)
             dms.append(hDM.getDistanceMatrix())
 
-        self.distance_matrix = sum(dms) #hDM.getDistanceMatrix()
+        self.distance_matrix = sum(dms)
         self.distance_matrix.index = self.s_name_list
         self.distance_matrix.columns = self.s_name_list
 
-    def SamplingData(self, file_number, types):
-        data_list = []
-        print(self.file_list[file_number])
+    def getBitData(self, file_number, types):
+        """
+        指定された単語ファイルから全地域の音素データをビットデータへ変換し、リストにして返す
+        """
 
         with codecs.open(self.file_list[file_number], "r", "Shift-JIS", "ignore") as files:
             mtoshi = pd.read_table(files, delimiter=",")
 
-        mbfs = mbf.MakeBitFrame(mtoshi, self.cons, self.vowel)
-        mbfs.makeIndeces(index_type=2)
-        mbfs.makeFrameList()
-        if types == 0:
-            data_list = np.array(mbfs.getArticulationFrame())
-        else:
-            data_list = np.array(mbfs.getWordFrame())
-        assert len(data_list) != 0, str(self.file_list[file_number])
-        concat_data = np.array(map(lambda x: "".join(np.hstack(x)), data_list))
-        
+            mbfs = mbf.MakeBitFrame(mtoshi, self.cons, self.vowel)
+
+            if types == 0:
+                mbfs.makeFrameList(data_type="a")
+            else:
+                mbfs.makeFrameList(data_type="w")
+
+            data_list = np.array(mbfs.getBitDataFrame())
+
+            assert len(data_list) != 0, str(self.file_list[file_number]) + "のファイルに不正文字が含まれている可能性があります。"
+
+            bit_data = mbfs.joinAlignments(copy.deepcopy(bit_data))
+            concat_data = np.array(map(lambda x: "".join(np.hstack(x)), data_list))
+
+            # あとでconcatenateするために各要素をリストにする必要がある。
+        #return map(lambda x: [x], bit_data)
         return concat_data
 
-    def oneWordFrame(self, init_table=0, types=0):
+    def generateOneWordFrame(self, types=0):
         """
         １単語による距離の生成
         types=0: 素性に基づく距離の生成, otherwise: 音素に基づく距離の生成
@@ -136,10 +146,9 @@ class GenerateControler(object):
         print(self.file_list)
 
         mbfs = mbf.MakeBitFrame(mtoshi, self.cons, self.vowel)
-        mbfs.makeIndeces(index_type=0)
+        mbfs.setIndecesLabels(index_type=0)
         name_list = np.array(mbfs.getNameIndex())
 
-        mbfs.makeFrameList()
 
         if types == 0:
             data_list = np.array(mbfs.getArticulationFrame())

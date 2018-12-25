@@ -21,22 +21,12 @@ class HammingDistanceMatrix(object):
             [[0.0 for i in range(len(data))] for k in range(len(data))])
         col, idx = np.triu_indices_from(init_matrix, k=1)
         dist_array = list(map(lambda x: self.calcHammingDistance(data[x[0]], data[x[1]]), zip(col, idx)))
-        """
-        for c, i in zip(col, idx):
-            # ハミング距離に対する類似度重み付け, default=1
-            symilarity = 1
-            # 言語地域間の距離
-            #distance = sum(map(lambda x: symilarity * self.calchammingDistance(
-            #    data[c][x], data[i][x]), range(len(data[c]))))
-            distance = self.calcHammingDistance(data[c], data[i])
-            init_matrix[i][c] = distance
-        """
+
         init_matrix.values[np.triu_indices_from(
             init_matrix, k=1)] = dist_array
         init_matrix.T.values[np.triu_indices_from(
             init_matrix, k=1)] = dist_array
-        #init_matrix.T.values[np.triu_indices_from(
-        #    init_matrix, k=0)] = init_matrix.values[np.triu_indices_from(init_matrix, k=0)]
+
         self.__distance_matrix = init_matrix
 
     def calcHammingDistance(self, array1, array2):
