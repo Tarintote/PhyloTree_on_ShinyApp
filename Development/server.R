@@ -5,6 +5,8 @@ gc <- import("generate_controler")
 nex <- import("helper")
 os <- import("os")
 
+gcc <- 0
+
 source("helpers.R")
 
 distance.object <- setRefClass(
@@ -31,7 +33,6 @@ distance.object <- setRefClass(
 )
 
 dis <- distance.object$new()
-count.handlar <- 0
 
 cwd <- os$getcwd()
 dirpath <- os$path$join(cwd, "DistanceStorage")
@@ -123,8 +124,7 @@ shinyServer(
             file_list <- selectFile()
             print(file_list)
             if(length(file_list)!=0){
-                gcc <- gc$GenerateControler(file_list, vowelDataBaseFilePath(), consonantDataBaseFilePath())
-                #gcc.makeUsingFileList('./csvFileList/notUsingCSV.dat')
+                gcc <<- gc$GenerateControler(file_list, vowelDataBaseFilePath(), consonantDataBaseFilePath())
                 gcc$mainPreProccess()
                 if (length(file_list) == 1){
                     gcc$generateOneWordFrame(types=selectArt_VC())
@@ -160,12 +160,28 @@ shinyServer(
         })
 
         update_checkbox.handlar <- reactive({
+            getFlag = generateDistance()
             updateCheckboxGroupInput(session, "area_check_box",
                 label = "Choose the area",
                 choices=attributes(dis$distance.matrix)$row.names,
                 selected=attributes(dis$distance.matrix)$row.names
             )
             return(input$checkbox) #無理やり変更
+        })
+
+        observeEvent(input$plot_action,{
+            getFlag = generateDistance()
+            if(getFlag==0){
+                update_checkbox.handlar()
+                s <- nex$squeezeArea(gcc$bit_frame_list, gcc$s_name_list, input$area_check_box)
+                if(!is.null(input$area_check_box)){
+                    nex$makeNexusFile_verArray(s, "../Nexusfile/Nexus_for_Sequence/", "sequence", input$area_check_box)
+                }else{
+                    nex$makeNexusFile_verArray(s, "../Nexusfile/Nexus_for_Sequence/", "sequence", gcc$s_name_list)
+                }
+            }else{
+                return(1)
+            }
         })
 
         ###############
@@ -197,15 +213,6 @@ shinyServer(
         output$tree <- renderPhylocanvas({
             tree.plot()
         })
-
-        #output$tree <- renderPlot({
-        #    tree.plot()
-        #},height = 900)
-
-        #output$tree <- renderRglwidget({
-        #    rglwidget(tree.plot())
-        #})
-        ###############
 
         #####################
         #####クラスタリング####
