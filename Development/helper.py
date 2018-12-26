@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 import os
 import codecs
+import numpy as np
 import pandas as pd
-
+from datetime import datetime
 
 def makeNexusFile(dm, nex_path, filename, index):
     """
@@ -47,7 +48,6 @@ def makeNexusFile(dm, nex_path, filename, index):
 
         file.write(";\nend;")
 
-
 def set_labels(dist):
     for i in range(len(dist)):
         if i == len(dist):
@@ -69,3 +69,51 @@ def set_labels(dist):
         dist = dist.rename(
             columns={dist.columns[i]: new_name}, index={dist.index[i]: new_name})
     return dist
+
+def squeezeArea(array, original_index, new_index):
+    if new_index==None:
+        return np.array(array)
+    else:
+        seq = np.array(array)
+        exist_idx = [i for i,x in enumerate(original_index) if x in new_index]
+        booler = np.zeros(len(original_index), dtype=bool)
+        booler[exist_idx] = True
+        return seq[booler]
+
+def makeNexusFile_verArray(array, nex_path, filename, index):
+    """
+    SplitTree作成のためのNexファイルを作成
+    dm : distance matrix(array型)
+    nex_path: nexusフォーマットのファイルの保存先へのパス
+    filename: 保存ファイル名
+    index: 地域名
+    """
+    index = map(lambda x: x.replace(":", "-"), index)
+    if(os.path.exists(nex_path + filename + ".nex") == True):
+        os.remove(nex_path + filename + ".nex")
+    with codecs.open(nex_path + filename + datetime.now().strftime("%Y-%m-%d-%H:%M:%S") + ".nex", mode="a", encoding="UTF-8") as file:
+        file.write("#nexus\n")
+        file.write("[!Mtoshi]\n\n")
+        file.write("BEGIN Taxa;\n")
+        file.write("DIMENSIONS ntax=" + str(len(index)) + ";\n")
+        file.write("TAXLABELS\n")
+        for i in range(0, len(index)):
+            file.write("[" + str(i+1) + "] " +
+                       unicode(index[i], "UTF-8") + "\n")
+            #file.write("["+ str(i+1) +"] " + index[i] + "\n")
+
+        file.write(";\n")
+        file.write("END; [Taxa]\n\n")
+
+        file.write("BEGIN Characters;\n")
+        file.write("DIMENSIONS nchar=" + str(len(array[0])) + ";\n")
+        file.write("FORMAT datatype=standard labels;\n")
+        file.write("MATRIX\n")
+
+        # distance matrix
+        for k in range(0, len(array)):
+            writeLine = "[" + str(k+1) + "]" + " " + \
+                unicode(index[k], "UTF-8") + "\t" + str(array[k])
+            file.write(writeLine + "\n")
+
+        file.write(";\nend;")
