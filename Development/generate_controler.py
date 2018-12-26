@@ -97,6 +97,8 @@ class GenerateControler(object):
         some_data = map(lambda file_num: self.getBitData(
             file_num, types), range(len(self.file_list)))
 
+        self.bit_frame_list = map("".join, np.array(some_data).T)
+
         hDM = hdm.HammingDistanceMatrix()
         dms = []
         for sd in some_data:
@@ -126,7 +128,7 @@ class GenerateControler(object):
 
             assert len(data_list) != 0, str(self.file_list[file_number]) + "のファイルに不正文字が含まれている可能性があります。"
 
-            concat_data = np.array(map(lambda x: "".join(np.hstack(x)), data_list))
+            concat_data = map(lambda x: "".join(np.hstack(x)), data_list)
 
             # あとでconcatenateするために各要素をリストにする必要がある。
         #return map(lambda x: [x], bit_data)
